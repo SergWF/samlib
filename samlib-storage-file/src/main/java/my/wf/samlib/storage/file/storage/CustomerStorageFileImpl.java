@@ -11,16 +11,17 @@ import java.util.List;
  * Created with IntelliJ IDEA.
  * User: SBilenogov
  */
-public class CustomerStorageFileImpl implements CustomerStorage {
+public class CustomerStorageFileImpl extends BaseStorageFileImpl<Customer> implements CustomerStorage {
 
-    private String dataFileName;
 
-    public String getDataFileName() {
-        return dataFileName;
-    }
+    private EntityData<Customer> customerData;
 
-    public void setDataFileName(String dataFileName) {
-        this.dataFileName = dataFileName;
+    @Override
+    protected EntityData<Customer> getData() {
+        if(null == customerData){
+            customerData = new EntityData<Customer>();
+        }
+        return customerData;
     }
 
     @Override
@@ -30,26 +31,6 @@ public class CustomerStorageFileImpl implements CustomerStorage {
 
     @Override
     public Customer createNewCustomerRecord(Customer customer, String password) {
-        return null;
-    }
-
-    @Override
-    public Customer get(Long id) {
-        return null;
-    }
-
-    @Override
-    public Customer save(Customer entity) {
-        return null;
-    }
-
-    @Override
-    public Customer remove(Customer entity) {
-        return null;
-    }
-
-    @Override
-    public List<Customer> list(CustomerFiltering<Customer> filter, CustomerOrdering<Customer> order) {
         return null;
     }
 }

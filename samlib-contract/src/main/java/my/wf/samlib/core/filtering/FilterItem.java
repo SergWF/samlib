@@ -1,13 +1,14 @@
 package my.wf.samlib.core.filtering;
 
-import my.wf.samlib.core.model.extender.Filterable;
+import my.wf.samlib.core.model.entity.BaseEntity;
+import my.wf.samlib.core.model.entity.ComparableItem;
 import my.wf.samlib.core.model.entity.Customer;
 
 /**
  * Created with IntelliJ IDEA.
  * User: SBilenogov
  */
-public class FilterItem<T extends Filterable> {
+public class FilterItem<T extends BaseEntity> implements ComparableItem<T> {
     private String fieldName;
     private String pattern;
     private Class<T> filteredClass;
@@ -20,18 +21,21 @@ public class FilterItem<T extends Filterable> {
         this.customer = customer;
     }
 
-    public String getFieldName() {
-        return fieldName;
-    }
-
     public String getPattern() {
         return pattern;
     }
 
-    public Class<T> getFilteredClass() {
+    @Override
+    public String getFieldName() {
+        return fieldName;
+    }
+
+    @Override
+    public Class<T> getProcessedClass() {
         return filteredClass;
     }
 
+    @Override
     public Customer getCustomer() {
         return customer;
     }

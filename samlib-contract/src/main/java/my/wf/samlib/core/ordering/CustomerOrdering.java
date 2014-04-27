@@ -1,6 +1,6 @@
 package my.wf.samlib.core.ordering;
 
-import my.wf.samlib.core.model.extender.Orderable;
+import my.wf.samlib.core.model.entity.BaseEntity;
 import my.wf.samlib.core.model.entity.Customer;
 
 import java.util.LinkedList;
@@ -10,7 +10,7 @@ import java.util.List;
  * Created with IntelliJ IDEA.
  * User: SBilenogov
  */
-public class CustomerOrdering<T extends Orderable> {
+public class CustomerOrdering<T extends BaseEntity> {
 
     public static enum Direction{
         ASC, DESC
@@ -26,7 +26,7 @@ public class CustomerOrdering<T extends Orderable> {
     }
 
     public CustomerOrdering<T> add(String fieldName, Direction direction) {
-        orderItems.add(new OrderItem<T>(fieldName, direction, orderableClass));
+        orderItems.add(new OrderItem<T>(fieldName, direction, orderableClass, customer));
         return this;
     }
 
@@ -36,5 +36,9 @@ public class CustomerOrdering<T extends Orderable> {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public List<OrderItem<T>> getOrderItems() {
+        return orderItems;
     }
 }

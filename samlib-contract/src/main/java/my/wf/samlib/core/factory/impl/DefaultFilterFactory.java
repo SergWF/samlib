@@ -2,7 +2,7 @@ package my.wf.samlib.core.factory.impl;
 
 import my.wf.samlib.core.factory.FilterFactory;
 import my.wf.samlib.core.filtering.CustomerFiltering;
-import my.wf.samlib.core.model.extender.Filterable;
+import my.wf.samlib.core.model.entity.BaseEntity;
 import my.wf.samlib.core.model.entity.Customer;
 
 /**
@@ -11,7 +11,7 @@ import my.wf.samlib.core.model.entity.Customer;
  */
 public class DefaultFilterFactory implements FilterFactory {
     @Override
-    public <T extends Filterable> CustomerFiltering<T> createFilter(Class<T> clazz, Customer customer) {
+    public <T extends BaseEntity> CustomerFiltering<T> createFilter(Class<T> clazz, Customer customer) {
         return new CustomerFiltering<T>(clazz, customer);
     }
 }

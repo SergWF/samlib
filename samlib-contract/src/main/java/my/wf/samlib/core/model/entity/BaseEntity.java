@@ -7,7 +7,7 @@ import my.wf.samlib.core.model.extender.Readable;
  * Created with IntelliJ IDEA.
  * User: SBilenogov
  */
-public abstract class BaseEntity implements Filterable, Orderable {
+public abstract class BaseEntity{
     private Long id;
     private String name;
 

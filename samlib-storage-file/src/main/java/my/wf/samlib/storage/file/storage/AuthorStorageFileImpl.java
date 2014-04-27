@@ -1,10 +1,10 @@
 package my.wf.samlib.storage.file.storage;
 
 import my.wf.samlib.core.filtering.CustomerFiltering;
-import my.wf.samlib.core.ordering.CustomerOrdering;
-import my.wf.samlib.core.storage.AuthorStorage;
 import my.wf.samlib.core.model.entity.Author;
 import my.wf.samlib.core.model.entity.Writing;
+import my.wf.samlib.core.ordering.CustomerOrdering;
+import my.wf.samlib.core.storage.AuthorStorage;
 
 import java.util.List;
 
@@ -12,47 +12,33 @@ import java.util.List;
  * Created with IntelliJ IDEA.
  * User: SBilenogov
  */
-public class AuthorStorageFileImpl implements AuthorStorage {
+public class AuthorStorageFileImpl extends BaseStorageFileImpl<Author> implements AuthorStorage {
 
-    private String dataFileName;
-    private AuthorData authorData;
+    private EntityData<Author> authorData;
 
-
-    public String getDataFileName() {
-        return dataFileName;
-    }
-
-    public void setDataFileName(String dataFileName) {
-        this.dataFileName = dataFileName;
+    @Override
+    public EntityData getData() {
+        if(null == authorData){
+            authorData = new EntityData<Author>();
+        }
+        return authorData;
     }
 
     @Override
     public Author findByLink(String authorLink) {
-        return authorData.getByLink(authorLink);
+        if(null == authorLink || 0 == authorLink.trim().length()){
+            return null;
+        }
+        for(Author author: authorData.getData()){
+            if(author.getLink().equals(authorLink)){
+                return author;
+            }
+        }
+        return null;
     }
 
     @Override
     public List<Writing> getAuthorsWritings(Author author, CustomerFiltering<Writing> filter, CustomerOrdering<Writing> order) {
-        return null;
-    }
-
-    @Override
-    public Author get(Long id) {
-        return null;
-    }
-
-    @Override
-    public Author save(Author entity) {
-        return null;
-    }
-
-    @Override
-    public Author remove(Author entity) {
-        return null;
-    }
-
-    @Override
-    public List<Author> list(CustomerFiltering<Author> filter, CustomerOrdering<Author> order) {
-        return null;
+        return getDataSorter().sort(getDataFilter().doFilter(author.getWritings(), filter), order);
     }
 }

@@ -1,6 +1,6 @@
 package my.wf.samlib.core.filtering;
 
-import my.wf.samlib.core.model.extender.Filterable;
+import my.wf.samlib.core.model.entity.BaseEntity;
 import my.wf.samlib.core.model.entity.Customer;
 
 import java.util.LinkedList;
@@ -10,7 +10,7 @@ import java.util.List;
  * Created with IntelliJ IDEA.
  * User: SBilenogov
  */
-public class CustomerFiltering<T extends Filterable> {
+public class CustomerFiltering<T extends BaseEntity> {
     private List<FilterItem<T>> filterItems = new LinkedList<FilterItem<T>>();
     private Class<T> filteredClass;
     private Customer customer;
