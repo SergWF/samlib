@@ -20,7 +20,7 @@ import static junit.framework.Assert.assertTrue;
  */
 @RunWith(Parameterized.class)
 public class CustomerRequestProcessorWritingsTest extends BaseCustomerRequestProcessorTest {
-
+/*
     private String testName;
     private String namePattern;
     private Boolean unreadOnly;
@@ -99,4 +99,5 @@ public class CustomerRequestProcessorWritingsTest extends BaseCustomerRequestPro
         }
         return true;
     }
+    */
 }

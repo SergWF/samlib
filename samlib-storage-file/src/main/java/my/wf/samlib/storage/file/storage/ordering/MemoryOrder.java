@@ -31,9 +31,9 @@ public class MemoryOrder {
         return new Comparator<T>() {
             @Override
             public int compare(T o1, T o2) {
-                for(OrderItem<T> item: order.getOrderItems()){
-                    String val1 = dataFieldReader.getValue(o1, item);
-                    String val2 = dataFieldReader.getValue(o2, item);
+                for(OrderItem item: order.getOrderItems()){
+                    Comparable val1 = (Comparable)dataFieldReader.getValue(o1, item);
+                    Comparable val2 = (Comparable)dataFieldReader.getValue(o2, item);
                     int res = val1.compareTo(val2);
                     if(res != 0){
                         return res;

@@ -15,7 +15,7 @@ public class CustomerOrdering<T extends BaseEntity> {
     public static enum Direction{
         ASC, DESC
     }
-    private List<OrderItem<T>> orderItems = new LinkedList<OrderItem<T>>();
+    private List<OrderItem> orderItems = new LinkedList<OrderItem>();
     private Class<T> orderableClass;
     private Customer customer;
 
@@ -26,7 +26,7 @@ public class CustomerOrdering<T extends BaseEntity> {
     }
 
     public CustomerOrdering<T> add(String fieldName, Direction direction) {
-        orderItems.add(new OrderItem<T>(fieldName, direction, orderableClass, customer));
+        //orderItems.add(new OrderItem(fieldName, direction, orderableClass, customer));
         return this;
     }
 
@@ -38,7 +38,7 @@ public class CustomerOrdering<T extends BaseEntity> {
         this.customer = customer;
     }
 
-    public List<OrderItem<T>> getOrderItems() {
+    public List<OrderItem> getOrderItems() {
         return orderItems;
     }
 }

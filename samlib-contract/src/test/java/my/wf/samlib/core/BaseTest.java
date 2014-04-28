@@ -20,6 +20,7 @@ import java.util.Date;
  * User: SBilenogov
  */
 public class BaseTest {
+    /*
 
     public static final String INITIALIZE_STRUCTURE_FIRST_PLEASE = "Initialize Structure first, please";
     CustomerRequestProcessor customerRequestProcessor;
@@ -119,4 +120,5 @@ public class BaseTest {
         }
         return authorStorage;
     }
+    */
 }

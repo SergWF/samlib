@@ -8,17 +8,19 @@ import my.wf.samlib.core.model.entity.Customer;
  * Created with IntelliJ IDEA.
  * User: SBilenogov
  */
-public class FilterItem<T extends BaseEntity> implements ComparableItem<T> {
+public class FilterItem<K> implements ComparableItem<K> {
     private String fieldName;
     private String pattern;
-    private Class<T> filteredClass;
+    //private Class<T> filteredClass;
     private Customer customer;
+    private Class<K> fieldValueClass;
 
-    public FilterItem(String fieldName, String pattern, Class<T> filteredClass, Customer customer) {
+    public FilterItem(String fieldName, String pattern, /*Class<T> filteredClass, */Customer customer, Class<K> fieldValueClass) {
         this.fieldName = fieldName;
         this.pattern = pattern;
-        this.filteredClass = filteredClass;
+        //this.filteredClass = filteredClass;
         this.customer = customer;
+        this.fieldValueClass = fieldValueClass;
     }
 
     public String getPattern() {
@@ -30,13 +32,18 @@ public class FilterItem<T extends BaseEntity> implements ComparableItem<T> {
         return fieldName;
     }
 
-    @Override
-    public Class<T> getProcessedClass() {
-        return filteredClass;
-    }
+//    @Override
+//    public Class<T> getProcessedClass() {
+//        return filteredClass;
+//    }
 
     @Override
     public Customer getCustomer() {
         return customer;
+    }
+
+    @Override
+    public Class getFieldClassValue() {
+        return null;
     }
 }

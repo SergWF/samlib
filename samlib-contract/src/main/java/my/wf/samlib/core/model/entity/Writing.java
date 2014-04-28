@@ -1,5 +1,6 @@
 package my.wf.samlib.core.model.entity;
 
+import my.wf.samlib.core.model.dataextract.DataExtractor;
 import my.wf.samlib.core.model.extender.*;
 import my.wf.samlib.core.model.extender.Readable;
 
@@ -18,7 +19,7 @@ public class Writing extends BaseEntity implements LastChanged, HasLink {
     private Date lastChangedDate;
 
     @Override
-    @Readable
+    @Readable(name = "link")
     public String getLink() {
         return link;
     }
@@ -36,7 +37,7 @@ public class Writing extends BaseEntity implements LastChanged, HasLink {
     }
 
 
-    @Readable
+    @Readable(name="description")
     public String getDescription() {
         return description;
     }
@@ -45,7 +46,7 @@ public class Writing extends BaseEntity implements LastChanged, HasLink {
         this.description = description;
     }
 
-    @Readable
+    @Readable(name="size")
     public String getSize() {
         return size;
     }
@@ -55,7 +56,7 @@ public class Writing extends BaseEntity implements LastChanged, HasLink {
     }
 
     @Override
-    @Readable
+    @Readable(name="lasChangedDate")
     public Date getLastChangedDate() {
         return lastChangedDate;
     }
@@ -64,7 +65,7 @@ public class Writing extends BaseEntity implements LastChanged, HasLink {
         this.lastChangedDate = lastChangedDate;
     }
 
-    @Readable
+    @Readable(name="groupName")
     public String getGroupName() {
         return groupName;
     }

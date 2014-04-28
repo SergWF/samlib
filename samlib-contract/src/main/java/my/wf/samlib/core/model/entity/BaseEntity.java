@@ -12,7 +12,7 @@ public abstract class BaseEntity{
     private String name;
 
 
-    @Readable
+    @Readable(name = "id")
     public Long getId() {
         return id;
     }
@@ -21,7 +21,7 @@ public abstract class BaseEntity{
         this.id = id;
     }
 
-    @Readable
+    @Readable(name="name")
     public String getName() {
         return name;
     }

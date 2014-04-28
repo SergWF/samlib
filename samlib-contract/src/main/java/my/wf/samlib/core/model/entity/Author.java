@@ -19,7 +19,7 @@ public class Author extends BaseEntity implements LastChanged, HasLink {
     private Date lastChangedDate;
 
     @Override
-    @Readable
+    @Readable(name="link")
     public String getLink() {
         return link;
     }
@@ -37,7 +37,7 @@ public class Author extends BaseEntity implements LastChanged, HasLink {
     }
 
     @Override
-    @Readable
+    @Readable(name="lastChangedDate")
     public Date getLastChangedDate() {
         return LastChangedDateHelper.getLastChanged(writings);
     }

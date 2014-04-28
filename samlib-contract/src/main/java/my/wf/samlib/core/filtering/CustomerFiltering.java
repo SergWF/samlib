@@ -11,7 +11,7 @@ import java.util.List;
  * User: SBilenogov
  */
 public class CustomerFiltering<T extends BaseEntity> {
-    private List<FilterItem<T>> filterItems = new LinkedList<FilterItem<T>>();
+    private List<FilterItem> filterItems = new LinkedList<FilterItem>();
     private Class<T> filteredClass;
     private Customer customer;
 
@@ -21,11 +21,11 @@ public class CustomerFiltering<T extends BaseEntity> {
     }
 
     public CustomerFiltering<T> add(String filterName, String pattern){
-        filterItems.add(new FilterItem<T>(filterName, pattern, filteredClass, customer));
+        //filterItems.add(new FilterItem(filterName, pattern, customer, filteredClass));
         return this;
     }
 
-    public List<FilterItem<T>> getItems(){
+    public List<FilterItem> getItems(){
         return filterItems;
     }
 }

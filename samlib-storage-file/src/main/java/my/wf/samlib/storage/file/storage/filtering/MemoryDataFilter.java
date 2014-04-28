@@ -31,11 +31,13 @@ public class MemoryDataFilter {
 
     private <T extends BaseEntity> boolean filterMatched(T entity, CustomerFiltering<T> filtering) {
         boolean res = true;
+        /*
         for(FilterItem<T> item: filtering.getItems()){
             if(!dataFieldReader.getValue(entity, item).contains(item.getPattern())){
                 return false;
             }
         }
+        */
         return res;
     }
 

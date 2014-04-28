@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
  * User: SBilenogov
  */
 public class CustomerOrderingTest extends BaseTest{
+/*
 
     Author author1;
     Author author2;
@@ -25,7 +26,6 @@ public class CustomerOrderingTest extends BaseTest{
         }
     }
 
-/*
     @Test
     public void testAdd() {
         OrderBy orderBy = OrderBy.create().add(BaseEntity.FIELD.NAME, OrderDirection.ASC).add(BaseEntity.FIELD.LAST_CHANGED, OrderDirection.DESC);

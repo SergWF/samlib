@@ -115,33 +115,11 @@ public class CustomerRequestProcessor {
     public List<Author> getAuthors(Customer customer, String namePattern, boolean unreadOnly, CustomerOrdering<Author> customerOrdering) {
         CustomerFiltering<Author> filter = filterFactory.createFilter(Author.class, customer).add("name", namePattern).add("unread", Boolean.toString(unreadOnly));
         return authorStorage.list(filter, customerOrdering);
-        /*
-        Collection<Author> collection = unreadOnly ? getUnreadAuthors(customer) : customer.getAuthors();
-        Set<Author> result = new TreeSet<Author>(((null == customerOrdering) ? defaultOrder : customerOrdering).getComparator());
-        namePattern = (null == namePattern) ? null : namePattern.trim().replaceAll("\\s+", " ");
-        for (Author author : collection) {
-            if (isNameMatched(author, namePattern)) {
-                result.add(author);
-            }
-        }
-        return new ArrayList<Author>(result);
-        */
     }
 
     public List<Writing> getWritings(Customer customer, Author author, String namePattern, boolean unreadOnly, CustomerOrdering<Writing> customerOrdering) {
         CustomerFiltering<Writing> filter = filterFactory.createFilter(Writing.class, customer).add("name", namePattern).add("unread", Boolean.toString(unreadOnly));
         return authorStorage.getAuthorsWritings(author, filter, customerOrdering);
-        /*
-        namePattern = (null == namePattern) ? null : namePattern.trim().replaceAll("\\s+", " ");
-        Set<Writing> result = new TreeSet<Writing>(((null == customerOrdering) ? defaultOrder : customerOrdering).getComparator());
-        Collection<Writing> writings = unreadOnly ? customer.getUnreadWritings() : author.getWritings();
-        for (Writing writing : writings) {
-            if (author.getId().equals(writing.getAuthor().getId()) && isNameMatched(writing, namePattern)) {
-                result.add(writing);
-            }
-        }
-        return new ArrayList(result);
-        */
     }
 
     public Author addAuthor(Customer customer, String authorLink) throws IOException {
