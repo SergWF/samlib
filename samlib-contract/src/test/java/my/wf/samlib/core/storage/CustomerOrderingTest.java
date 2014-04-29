@@ -1,16 +1,12 @@
 package my.wf.samlib.core.storage;
 
-import my.wf.samlib.core.BaseTest;
-import my.wf.samlib.core.model.entity.Author;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import my.wf.samlib.core.EntityCreator;
 
 /**
  * Created with IntelliJ IDEA.
  * User: SBilenogov
  */
-public class CustomerOrderingTest extends BaseTest{
+public class CustomerOrderingTest extends EntityCreator {
 /*
 
     Author author1;
@@ -54,7 +50,7 @@ public class CustomerOrderingTest extends BaseTest{
     public void testComparatorByNameAsc() {
         createAuthors();
         OrderBy orderBy = OrderBy.create(BaseEntity.FIELD.NAME, OrderDirection.ASC);
-        int compared = orderBy.getComparator().compare(author1, author2);
+        int compared = orderBy.getComparator().compareByType(author1, author2);
         assertTrue(compared < 0);
     }
 
@@ -62,7 +58,7 @@ public class CustomerOrderingTest extends BaseTest{
     public void testComparatorByNameDesc() {
         createAuthors();
         OrderBy orderBy = OrderBy.create(BaseEntity.FIELD.NAME, OrderDirection.DESC);
-        int compared = orderBy.getComparator().compare(author1, author2);
+        int compared = orderBy.getComparator().compareByType(author1, author2);
         assertTrue(compared > 0);
     }
 
@@ -70,7 +66,7 @@ public class CustomerOrderingTest extends BaseTest{
     public void testComparatorByDateAsc() {
         createAuthors();
         OrderBy orderBy = OrderBy.create(BaseEntity.FIELD.LAST_CHANGED, OrderDirection.ASC);
-        int compared = orderBy.getComparator().compare(author1, author2);
+        int compared = orderBy.getComparator().compareByType(author1, author2);
         assertTrue(compared < 0);
     }
 
@@ -78,7 +74,7 @@ public class CustomerOrderingTest extends BaseTest{
     public void testComparatorByDateDesc() {
         createAuthors();
         OrderBy orderBy = OrderBy.create(BaseEntity.FIELD.LAST_CHANGED, OrderDirection.DESC);
-        int compared = orderBy.getComparator().compare(author1, author2);
+        int compared = orderBy.getComparator().compareByType(author1, author2);
         assertTrue(compared > 0);
     }
 
@@ -86,14 +82,14 @@ public class CustomerOrderingTest extends BaseTest{
     public void testComparatorByUnreadAsc() {
         createAuthors();
         OrderBy orderBy = OrderBy.create(BaseEntity.FIELD.IS_UNREAD, OrderDirection.ASC);
-        int compared = orderBy.getComparator().compare(author1, author2);
+        int compared = orderBy.getComparator().compareByType(author1, author2);
         assertTrue(compared < 0);
     }
     @Test
     public void testComparatorByUnreadDesc() {
         createAuthors();
         OrderBy orderBy = OrderBy.create(BaseEntity.FIELD.IS_UNREAD, OrderDirection.DESC);
-        int compared = orderBy.getComparator().compare(author1, author2);
+        int compared = orderBy.getComparator().compareByType(author1, author2);
         assertTrue(compared > 0);
     }
 
@@ -102,7 +98,7 @@ public class CustomerOrderingTest extends BaseTest{
         createAuthors();
         Author author3 = createAuthor(3L, "http://link1", "Name1", new SimpleDateFormat("yyyy.MM.dd").parse("2000.10.21"), true);
         OrderBy orderBy = OrderBy.create(BaseEntity.FIELD.NAME, OrderDirection.ASC).add(BaseEntity.FIELD.LAST_CHANGED, OrderDirection.DESC);
-        int compared = orderBy.getComparator().compare(author1, author3);
+        int compared = orderBy.getComparator().compareByType(author1, author3);
         assertTrue(compared > 0);
     }
 
@@ -110,7 +106,7 @@ public class CustomerOrderingTest extends BaseTest{
     public void testComparatorByNameAscDateDesc1() throws ParseException {
         createAuthors();
         OrderBy orderBy = OrderBy.create(BaseEntity.FIELD.NAME, OrderDirection.ASC).add(BaseEntity.FIELD.LAST_CHANGED, OrderDirection.DESC);
-        int compared = orderBy.getComparator().compare(author1, author2);
+        int compared = orderBy.getComparator().compareByType(author1, author2);
         assertTrue(compared < 0);
     }
     */

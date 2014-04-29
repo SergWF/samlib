@@ -5,7 +5,5 @@ package my.wf.samlib.core.model.entity;
  */
 public interface ComparableItem<K> {
     String getFieldName();
-    //Class<T> getProcessedClass();
     Customer getCustomer();
-    Class<K> getFieldClassValue();
 }

@@ -11,16 +11,12 @@ import my.wf.samlib.core.model.entity.Customer;
 public class OrderItem<T extends BaseEntity, K> implements ComparableItem<K> {
     private String fieldName;
     private CustomerOrdering.Direction direction;
-    private Class<T> processedClass;
     private Customer customer;
-    private Class<K> fieldValueClass;
 
-    public OrderItem(String fieldName, CustomerOrdering.Direction direction, Class<T> processedClass, Customer customer, Class<K> fieldValueClazz) {
+    public OrderItem(String fieldName, CustomerOrdering.Direction direction, Customer customer) {
         this.fieldName = fieldName;
         this.direction = direction;
-        this.processedClass = processedClass;
         this.customer = customer;
-        this.fieldValueClass = fieldValueClazz;
     }
  
     @Override
@@ -35,10 +31,5 @@ public class OrderItem<T extends BaseEntity, K> implements ComparableItem<K> {
     @Override
     public Customer getCustomer() {
         return customer;
-    }
-
-    @Override
-    public Class<K> getFieldClassValue() {
-        return fieldValueClass;
     }
 }

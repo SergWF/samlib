@@ -113,12 +113,12 @@ public class CustomerRequestProcessor {
     }
 
     public List<Author> getAuthors(Customer customer, String namePattern, boolean unreadOnly, CustomerOrdering<Author> customerOrdering) {
-        CustomerFiltering<Author> filter = filterFactory.createFilter(Author.class, customer).add("name", namePattern).add("unread", Boolean.toString(unreadOnly));
+        CustomerFiltering<Author> filter = filterFactory.createFilter(Author.class, customer).add("name", namePattern).add("unread", unreadOnly);
         return authorStorage.list(filter, customerOrdering);
     }
 
     public List<Writing> getWritings(Customer customer, Author author, String namePattern, boolean unreadOnly, CustomerOrdering<Writing> customerOrdering) {
-        CustomerFiltering<Writing> filter = filterFactory.createFilter(Writing.class, customer).add("name", namePattern).add("unread", Boolean.toString(unreadOnly));
+        CustomerFiltering<Writing> filter = filterFactory.createFilter(Writing.class, customer).add("name", namePattern).add("unread", unreadOnly);
         return authorStorage.getAuthorsWritings(author, filter, customerOrdering);
     }
 

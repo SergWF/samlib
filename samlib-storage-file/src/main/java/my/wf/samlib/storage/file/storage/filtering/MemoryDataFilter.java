@@ -2,8 +2,9 @@ package my.wf.samlib.storage.file.storage.filtering;
 
 import my.wf.samlib.core.filtering.CustomerFiltering;
 import my.wf.samlib.core.filtering.FilterItem;
+import my.wf.samlib.core.model.dataextract.DataExtractor;
+import my.wf.samlib.core.model.dataextract.DataExtractorFactory;
 import my.wf.samlib.core.model.entity.BaseEntity;
-import my.wf.samlib.storage.file.storage.DataFieldReader;
 
 import java.util.*;
 
@@ -13,16 +14,21 @@ import java.util.*;
  */
 public class MemoryDataFilter {
 
-    private DataFieldReader dataFieldReader = new DataFieldReader();
+    private DataExtractorFactory dataExtractorFactory;
 
-    public MemoryDataFilter(DataFieldReader dataFieldReader) {
-        this.dataFieldReader = dataFieldReader;
+    public DataExtractorFactory getDataExtractorFactory() {
+        return dataExtractorFactory;
     }
 
-    public <T extends BaseEntity> List<T> doFilter(Collection<T> list, CustomerFiltering<T> filtering){
+    public void setDataExtractorFactory(DataExtractorFactory dataExtractorFactory) {
+        this.dataExtractorFactory = dataExtractorFactory;
+    }
+
+
+    public <T extends BaseEntity> List<T> doFilter(Collection<T> list, CustomerFiltering<T> filtering) {
         List<T> result = new LinkedList<T>();
-        for(T entity: list){
-            if(filterMatched(entity, filtering)){
+        for (T entity : list) {
+            if (filterMatched(entity, filtering)) {
                 result.add(entity);
             }
         }
@@ -30,16 +36,16 @@ public class MemoryDataFilter {
     }
 
     private <T extends BaseEntity> boolean filterMatched(T entity, CustomerFiltering<T> filtering) {
-        boolean res = true;
-        /*
-        for(FilterItem<T> item: filtering.getItems()){
-            if(!dataFieldReader.getValue(entity, item).contains(item.getPattern())){
+        DataExtractor<T> dataExtractor = (DataExtractor<T>) dataExtractorFactory.getDataExtractor(entity.getClass());
+        for (FilterItem item : filtering.getItems()) {
+            if (! match(dataExtractor.getValue(entity, item), item)) {
                 return false;
             }
         }
-        */
-        return res;
+        return true;
     }
 
-
+    protected <T extends BaseEntity, K> boolean match(K value, FilterItem<K> item){
+        return DataMatcher.match(value, item);
+    }
 }

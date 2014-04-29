@@ -1,6 +1,7 @@
 package my.wf.samlib.core.model.entity;
 
 import my.wf.samlib.core.helper.LastChangedDateHelper;
+import my.wf.samlib.core.model.dataextract.impl.AuthorIsUnreadExtractor;
 import my.wf.samlib.core.model.extender.*;
 import my.wf.samlib.core.model.extender.Readable;
 
@@ -12,7 +13,7 @@ import java.util.Set;
  * Created with IntelliJ IDEA.
  * User: SBilenogov
  */
-public class Author extends BaseEntity implements LastChanged, HasLink {
+public class Author extends BaseEntity implements LastChanged, HasLink, HasUnreadState {
 
     private Set<Writing> writings = new HashSet<Writing>();
     private String link;
@@ -42,4 +43,14 @@ public class Author extends BaseEntity implements LastChanged, HasLink {
         return LastChangedDateHelper.getLastChanged(writings);
     }
 
+    @Override
+    @Readable(name="unread", extractorClass = AuthorIsUnreadExtractor.class)
+    public Boolean unreadByCustomer(Customer customer) {
+        for(Writing writing: customer.getUnreadWritings()){
+            if(writing.getAuthor().equals(this)){
+                return true;
+            }
+        }
+        return false;
+    }
 }

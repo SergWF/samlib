@@ -11,6 +11,6 @@ import my.wf.samlib.core.model.entity.Writing;
 public class WritingIsUnreadExtractor implements CustomDataFieldExtractor<Writing, Boolean> {
     @Override
     public Boolean extractData(Writing entity, ComparableItem<Boolean> item) {
-        return item.getCustomer().getUnreadWritings().contains(entity);
+        return entity.unreadByCustomer(item.getCustomer());
     }
 }

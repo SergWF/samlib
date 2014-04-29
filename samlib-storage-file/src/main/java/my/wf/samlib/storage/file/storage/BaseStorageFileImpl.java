@@ -14,7 +14,6 @@ import java.util.List;
  */
 public abstract class BaseStorageFileImpl<T extends BaseEntity> implements Storage<T> {
     private String dataFileName;
-    private DataFieldReader dataFieldReader;
     private MemoryDataFilter dataFilter;
     private MemoryOrder dataSorter;
     private FileStorage  fileStorage;
@@ -28,14 +27,6 @@ public abstract class BaseStorageFileImpl<T extends BaseEntity> implements Stora
 
     public void setDataFileName(String dataFileName) {
         this.dataFileName = dataFileName;
-    }
-
-    public DataFieldReader getDataFieldReader() {
-        return dataFieldReader;
-    }
-
-    public void setDataFieldReader(DataFieldReader dataFieldReader) {
-        this.dataFieldReader = dataFieldReader;
     }
 
     public MemoryDataFilter getDataFilter() {

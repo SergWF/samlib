@@ -1,6 +1,7 @@
 package my.wf.samlib.core.filtering;
 
 import my.wf.samlib.core.model.entity.BaseEntity;
+import my.wf.samlib.core.model.entity.ComparableItem;
 import my.wf.samlib.core.model.entity.Customer;
 
 import java.util.LinkedList;
@@ -20,8 +21,8 @@ public class CustomerFiltering<T extends BaseEntity> {
         this.customer = customer;
     }
 
-    public CustomerFiltering<T> add(String filterName, String pattern){
-        //filterItems.add(new FilterItem(filterName, pattern, customer, filteredClass));
+    public <K> CustomerFiltering<T> add(String filterName, K pattern){
+        filterItems.add(new FilterItem(filterName, pattern, customer, pattern.getClass()));
         return this;
     }
 

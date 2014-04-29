@@ -9,6 +9,6 @@ import java.lang.reflect.InvocationTargetException;
  * Created with IntelliJ IDEA.
  * User: SBilenogov
  */
-public interface CustomDataFieldExtractor<T extends BaseEntity, K> {
-    K extractData(T entity, ComparableItem<K> item);
+public interface CustomDataFieldExtractor<T extends BaseEntity, K> extends DataFieldExtractor<T, K> {
+    //K extractData(T entity, ComparableItem<K> item);
 }

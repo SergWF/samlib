@@ -26,7 +26,7 @@ public class CustomerOrdering<T extends BaseEntity> {
     }
 
     public CustomerOrdering<T> add(String fieldName, Direction direction) {
-        //orderItems.add(new OrderItem(fieldName, direction, orderableClass, customer));
+        orderItems.add(new OrderItem(fieldName, direction, customer));
         return this;
     }
 
@@ -40,5 +40,9 @@ public class CustomerOrdering<T extends BaseEntity> {
 
     public List<OrderItem> getOrderItems() {
         return orderItems;
+    }
+
+    public Class<T> getOrderableClass() {
+        return orderableClass;
     }
 }

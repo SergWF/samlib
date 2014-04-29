@@ -25,20 +25,24 @@ public class DataExtractorFactory {
 
         @Override
         public <K> K getValue(T entity, ComparableItem<K> item) {
-            return (K) map.get(item.getFieldName()).extractData(entity, item);
+            DataFieldExtractor dataFieldExtractor = map.get(item.getFieldName());
+            if(null == dataFieldExtractor){
+                throw new ExtractFieldDataException(item.getFieldName(), entity.getClass());
+            }
+            return (K) dataFieldExtractor.extractData(entity, item);
         }
     }
 
-    public <T extends BaseEntity> DataExtractor<T> getDataExtractor(Class<T> clazz, Customer customer) {
+    public <T extends BaseEntity> DataExtractor<T> getDataExtractor(Class<T> clazz) {
         DataExtractor dataExtractor = map.get(clazz);
         if (null == dataExtractor) {
-            dataExtractor = createDataExtractor(clazz, customer);
+            dataExtractor = createDataExtractor(clazz);
             map.put(clazz, dataExtractor);
         }
         return dataExtractor;
     }
 
-    private <T extends BaseEntity> DataExtractor<T> createDataExtractor(Class<T> clazz, Customer customer) {
+    private <T extends BaseEntity> DataExtractor<T> createDataExtractor(Class<T> clazz) {
         FastClass fClass = FastClass.create(clazz);
         DataExtractorImpl<T> dataExtractor = new DataExtractorImpl<T>();
         for (Method m : clazz.getMethods()) {
