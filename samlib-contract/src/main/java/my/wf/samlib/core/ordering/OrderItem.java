@@ -1,6 +1,5 @@
 package my.wf.samlib.core.ordering;
 
-import my.wf.samlib.core.model.entity.BaseEntity;
 import my.wf.samlib.core.model.entity.ComparableItem;
 import my.wf.samlib.core.model.entity.Customer;
 
@@ -8,7 +7,7 @@ import my.wf.samlib.core.model.entity.Customer;
  * Created with IntelliJ IDEA.
  * User: SBilenogov
  */
-public class OrderItem<T extends BaseEntity, K> implements ComparableItem<K> {
+public class OrderItem<K> implements ComparableItem<K> {
     private String fieldName;
     private CustomerOrdering.Direction direction;
     private Customer customer;

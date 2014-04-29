@@ -3,7 +3,6 @@ package my.wf.samlib.core.model.dataextract;
 import my.wf.samlib.core.message.exception.ExtractFieldDataException;
 import my.wf.samlib.core.model.entity.BaseEntity;
 import my.wf.samlib.core.model.entity.ComparableItem;
-import my.wf.samlib.core.model.entity.Customer;
 import my.wf.samlib.core.model.extender.Readable;
 import net.sf.cglib.reflect.FastClass;
 import net.sf.cglib.reflect.FastMethod;
@@ -34,7 +33,7 @@ public class DataExtractorFactory {
     }
 
     public <T extends BaseEntity> DataExtractor<T> getDataExtractor(Class<T> clazz) {
-        DataExtractor dataExtractor = map.get(clazz);
+        DataExtractor<T> dataExtractor = map.get(clazz);
         if (null == dataExtractor) {
             dataExtractor = createDataExtractor(clazz);
             map.put(clazz, dataExtractor);
