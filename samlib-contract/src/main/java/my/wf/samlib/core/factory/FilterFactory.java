@@ -1,6 +1,6 @@
 package my.wf.samlib.core.factory;
 
-import my.wf.samlib.core.filtering.CustomerFiltering;
+import my.wf.samlib.core.dataextract.filtering.CustomerFiltering;
 import my.wf.samlib.core.model.entity.BaseEntity;
 import my.wf.samlib.core.model.entity.Customer;
 

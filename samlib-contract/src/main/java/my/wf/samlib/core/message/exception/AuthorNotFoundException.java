@@ -8,14 +8,23 @@ import my.wf.samlib.core.model.entity.Customer;
  */
 public class AuthorNotFoundException extends CustomerException {
     private String link;
+    private Long id;
 
-    public AuthorNotFoundException(Customer customer, String link) {
+    public AuthorNotFoundException(Customer customer, String authorLink) {
         super(customer);
-        this.link = link;
+        this.link = authorLink;
     }
 
-    public AuthorNotFoundException(Throwable cause, Customer customer, String link) {
-        super(cause, customer);
-        this.link = link;
+    public AuthorNotFoundException(Customer customer, Long authorId) {
+        super(customer);
+        this.id = authorId;
+    }
+
+    public String getAuthorLink() {
+        return link;
+    }
+
+    public Long getAuthorId() {
+        return id;
     }
 }

@@ -1,12 +1,16 @@
 package my.wf.samlib.core.message.exception;
 
+import my.wf.samlib.core.dataextract.DataFieldExtractor;
+import my.wf.samlib.core.model.entity.BaseEntity;
+
 /**
  * Created with IntelliJ IDEA.
  * User: SBilenogov
  */
-public class ExtractFieldDataException extends SamlibException {
+public class ExtractFieldDataException extends SamlibRuntimeException {
     private String fieldName;
     private Class entityClass;
+    private  Class extractorClass;
 
     public String getFieldName() {
         return fieldName;
@@ -16,29 +20,17 @@ public class ExtractFieldDataException extends SamlibException {
         return entityClass;
     }
 
-    public ExtractFieldDataException() {
+    public Class getExtractorClass() {
+        return extractorClass;
     }
 
-    public ExtractFieldDataException(String message) {
-        super(message);
-    }
-
-    public ExtractFieldDataException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public ExtractFieldDataException(Throwable cause) {
-        super(cause);
-    }
-
-    public ExtractFieldDataException(String message, String fieldName, Class entityClass) {
-        super(message);
-        this.fieldName = fieldName;
-        this.entityClass = entityClass;
-    }
     public ExtractFieldDataException(String fieldName, Class entityClass) {
-        super("Wrong fieldName [" + fieldName + "] for class ["+entityClass+"]");
         this.fieldName = fieldName;
         this.entityClass = entityClass;
+    }
+
+    public ExtractFieldDataException(Class extractorClass, Class entityClass) {
+        this.entityClass = entityClass;
+        this.extractorClass = extractorClass;
     }
 }

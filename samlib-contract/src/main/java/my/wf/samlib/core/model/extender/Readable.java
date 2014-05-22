@@ -1,7 +1,6 @@
 package my.wf.samlib.core.model.extender;
 
-import my.wf.samlib.core.model.dataextract.CustomDataFieldExtractor;
-import my.wf.samlib.core.model.dataextract.DataFieldExtractor;
+import my.wf.samlib.core.dataextract.DataFieldExtractor;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,7 +1,9 @@
 package my.wf.samlib.core.storage;
 
-import my.wf.samlib.core.filtering.CustomerFiltering;
-import my.wf.samlib.core.ordering.CustomerOrdering;
+import my.wf.samlib.core.dataextract.filtering.CustomerFiltering;
+import my.wf.samlib.core.dataextract.ordering.CustomerOrdering;
+import my.wf.samlib.core.message.exception.ExtractFieldDataException;
+import my.wf.samlib.core.message.exception.StorageException;
 import my.wf.samlib.core.model.entity.BaseEntity;
 
 import java.util.List;
@@ -12,7 +14,7 @@ import java.util.List;
  */
 public interface Storage<T extends BaseEntity> {
     T get(Long id);
-    T save(T entity);
+    T save(T entity) throws StorageException;
     T remove(T entity);
     List<T> list(CustomerFiltering<T> filter, CustomerOrdering<T> order);
 }

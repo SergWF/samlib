@@ -1,6 +1,7 @@
 package my.wf.samlib.core.requestprocessor;
 
 import my.wf.samlib.core.factory.AuthorFactory;
+import my.wf.samlib.core.message.exception.StorageException;
 import my.wf.samlib.core.sprider.AuthorWebReader;
 import my.wf.samlib.core.storage.AuthorStorage;
 import my.wf.samlib.core.model.entity.Author;
@@ -53,7 +54,7 @@ public class AuthorProcessor {
         this.authorFactory = authorFactory;
     }
 
-    public Author addNewAuthor(String authorLink) throws IOException {
+    public Author addNewAuthor(String authorLink) throws IOException, StorageException {
         Author author = authorStorage.findByLink(authorLink);
         if (null == author) {
             author = authorStorage.save(webReader.readAuthorByLink(authorFactory.newAuthor(authorLink), new Date()));
@@ -63,11 +64,11 @@ public class AuthorProcessor {
         return author;
     }
 
-    public Author removeAuthor(Author author) {
+    public Author removeAuthor(Author author) throws StorageException {
         return authorStorage.remove(author);
     }
 
-    public Author updateAuthor(Author author) throws IOException {
+    public Author updateAuthor(Author author) throws IOException, StorageException {
         return authorStorage.save(webReader.readAuthorByLink(author, new Date()));
     }
 }

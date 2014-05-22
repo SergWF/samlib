@@ -1,12 +1,12 @@
 package my.wf.samlib.core.model.entity;
 
-import my.wf.samlib.core.model.extender.*;
 import my.wf.samlib.core.model.extender.Readable;
 
 /**
  * Created with IntelliJ IDEA.
  * User: SBilenogov
  */
+
 public abstract class BaseEntity{
     private Long id;
     private String name;
@@ -28,5 +28,22 @@ public abstract class BaseEntity{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof BaseEntity)) return false;
+
+        BaseEntity that = (BaseEntity) o;
+
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : super.hashCode();
     }
 }

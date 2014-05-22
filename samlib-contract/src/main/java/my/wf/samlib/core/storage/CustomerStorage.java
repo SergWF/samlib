@@ -7,6 +7,6 @@ import my.wf.samlib.core.model.entity.Customer;
  * User: SBilenogov
  */
 public interface CustomerStorage extends Storage<Customer> {
-    Customer getByCredentials(String customerName, String password);
+    Customer getByName(String customerName);
     Customer createNewCustomerRecord(Customer customer, String password);
 }

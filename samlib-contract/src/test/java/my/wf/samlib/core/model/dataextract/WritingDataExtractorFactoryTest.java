@@ -1,6 +1,8 @@
 package my.wf.samlib.core.model.dataextract;
 
 import my.wf.samlib.core.EntityCreator;
+import my.wf.samlib.core.dataextract.DataExtractor;
+import my.wf.samlib.core.dataextract.DataExtractorFactory;
 import my.wf.samlib.core.model.entity.ComparableItem;
 import my.wf.samlib.core.model.entity.Customer;
 import my.wf.samlib.core.model.entity.Writing;
@@ -10,10 +12,8 @@ import org.junit.runners.Parameterized;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 

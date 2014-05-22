@@ -1,8 +1,9 @@
 package my.wf.samlib.core.model.entity;
 
-import my.wf.samlib.core.model.dataextract.DataExtractor;
-import my.wf.samlib.core.model.dataextract.impl.WritingIsUnreadExtractor;
-import my.wf.samlib.core.model.extender.*;
+import my.wf.samlib.core.dataextract.impl.WritingIsUnreadExtractor;
+import my.wf.samlib.core.model.extender.HasLink;
+import my.wf.samlib.core.model.extender.HasUnreadState;
+import my.wf.samlib.core.model.extender.LastChanged;
 import my.wf.samlib.core.model.extender.Readable;
 
 import java.util.Date;
@@ -57,7 +58,7 @@ public class Writing extends BaseEntity implements LastChanged, HasLink, HasUnre
     }
 
     @Override
-    @Readable(name="lasChangedDate")
+    @Readable(name="lastChangedDate")
     public Date getLastChangedDate() {
         return lastChangedDate;
     }

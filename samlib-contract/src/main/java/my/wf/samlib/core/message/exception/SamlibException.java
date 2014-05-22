@@ -4,7 +4,7 @@ package my.wf.samlib.core.message.exception;
  * Created with IntelliJ IDEA.
  * User: SBilenogov
  */
-public class SamlibException extends RuntimeException {
+public class SamlibException extends Exception {
     public SamlibException() {
     }
 

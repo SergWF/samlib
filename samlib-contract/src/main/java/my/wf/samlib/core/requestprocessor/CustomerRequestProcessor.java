@@ -2,9 +2,11 @@ package my.wf.samlib.core.requestprocessor;
 
 import my.wf.samlib.core.factory.FilterFactory;
 import my.wf.samlib.core.factory.OrderFactory;
-import my.wf.samlib.core.filtering.CustomerFiltering;
-import my.wf.samlib.core.ordering.CustomerOrdering;
+import my.wf.samlib.core.dataextract.filtering.CustomerFiltering;
+import my.wf.samlib.core.dataextract.ordering.CustomerOrdering;
 import my.wf.samlib.core.factory.CustomerFactory;
+import my.wf.samlib.core.message.exception.ExtractFieldDataException;
+import my.wf.samlib.core.message.exception.StorageException;
 import my.wf.samlib.core.sprider.AuthorWebReader;
 import my.wf.samlib.core.storage.AuthorStorage;
 import my.wf.samlib.core.storage.CustomerStorage;
@@ -112,28 +114,28 @@ public class CustomerRequestProcessor {
         return authors;
     }
 
-    public List<Author> getAuthors(Customer customer, String namePattern, boolean unreadOnly, CustomerOrdering<Author> customerOrdering) {
+    public List<Author> getAuthors(Customer customer, String namePattern, boolean unreadOnly, CustomerOrdering<Author> customerOrdering) throws StorageException, ExtractFieldDataException {
         CustomerFiltering<Author> filter = filterFactory.createFilter(Author.class, customer).add("name", namePattern).add("unread", unreadOnly);
         return authorStorage.list(filter, customerOrdering);
     }
 
-    public List<Writing> getWritings(Customer customer, Author author, String namePattern, boolean unreadOnly, CustomerOrdering<Writing> customerOrdering) {
+    public List<Writing> getWritings(Customer customer, Author author, String namePattern, boolean unreadOnly, CustomerOrdering<Writing> customerOrdering) throws ExtractFieldDataException {
         CustomerFiltering<Writing> filter = filterFactory.createFilter(Writing.class, customer).add("name", namePattern).add("unread", unreadOnly);
         return authorStorage.getAuthorsWritings(author, filter, customerOrdering);
     }
 
-    public Author addAuthor(Customer customer, String authorLink) throws IOException {
+    public Author addAuthor(Customer customer, String authorLink) throws IOException, StorageException {
         return addAuthor(customer, authorProcessor.addNewAuthor(authorLink));
     }
 
-    public Author addAuthor(Customer customer, Author author) {
+    public Author addAuthor(Customer customer, Author author) throws StorageException {
         customer.getAuthors().add(author);
         customerStorage.save(customer);
         messageProcessor.addInfoMessage(customer, AUTHOR_WAS_ADDED, new String[]{author.getName()});
         return author;
     }
 
-    public Author removeAuthor(Customer customer, Author author) {
+    public Author removeAuthor(Customer customer, Author author) throws StorageException {
         customer.getAuthors().remove(author);
         customerStorage.save(customer);
         messageProcessor.addInfoMessage(customer, AUTHOR_WAS_REMOVED, new String[]{author.getName()});

@@ -6,15 +6,10 @@ import my.wf.samlib.core.model.entity.Customer;
  * Created with IntelliJ IDEA.
  * User: SBilenogov
  */
-public class CustomerException extends SamlibException {
+public class CustomerException extends SamlibRuntimeException {
     private Customer customer;
 
     public CustomerException(Customer customer) {
-        this.customer = customer;
-    }
-
-    public CustomerException(Throwable cause, Customer customer) {
-        super(cause);
         this.customer = customer;
     }
 

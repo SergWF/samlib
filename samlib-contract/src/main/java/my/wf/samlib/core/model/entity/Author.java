@@ -1,8 +1,10 @@
 package my.wf.samlib.core.model.entity;
 
+import my.wf.samlib.core.dataextract.impl.AuthorIsUnreadExtractor;
 import my.wf.samlib.core.helper.LastChangedDateHelper;
-import my.wf.samlib.core.model.dataextract.impl.AuthorIsUnreadExtractor;
-import my.wf.samlib.core.model.extender.*;
+import my.wf.samlib.core.model.extender.HasLink;
+import my.wf.samlib.core.model.extender.HasUnreadState;
+import my.wf.samlib.core.model.extender.LastChanged;
 import my.wf.samlib.core.model.extender.Readable;
 
 import java.util.Date;
@@ -17,7 +19,6 @@ public class Author extends BaseEntity implements LastChanged, HasLink, HasUnrea
 
     private Set<Writing> writings = new HashSet<Writing>();
     private String link;
-    private Date lastChangedDate;
 
     @Override
     @Readable(name="link")

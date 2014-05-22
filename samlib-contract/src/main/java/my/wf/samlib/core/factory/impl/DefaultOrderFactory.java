@@ -3,7 +3,7 @@ package my.wf.samlib.core.factory.impl;
 import my.wf.samlib.core.factory.OrderFactory;
 import my.wf.samlib.core.model.entity.BaseEntity;
 import my.wf.samlib.core.model.entity.Customer;
-import my.wf.samlib.core.ordering.CustomerOrdering;
+import my.wf.samlib.core.dataextract.ordering.CustomerOrdering;
 
 /**
  * Created with IntelliJ IDEA.

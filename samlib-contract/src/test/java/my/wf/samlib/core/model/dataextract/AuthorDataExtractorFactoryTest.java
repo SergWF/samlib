@@ -1,6 +1,8 @@
 package my.wf.samlib.core.model.dataextract;
 
 import my.wf.samlib.core.EntityCreator;
+import my.wf.samlib.core.dataextract.DataExtractor;
+import my.wf.samlib.core.dataextract.DataExtractorFactory;
 import my.wf.samlib.core.model.entity.Author;
 import my.wf.samlib.core.model.entity.ComparableItem;
 import my.wf.samlib.core.model.entity.Customer;

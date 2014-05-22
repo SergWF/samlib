@@ -24,4 +24,5 @@ public class Customer extends BaseEntity {
     public void setEnabled(boolean enabled){
         this.enabled = enabled;
     }
+
 }
