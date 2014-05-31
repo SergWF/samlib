@@ -5,6 +5,7 @@ import my.wf.samlib.core.message.exception.StorageException;
 import my.wf.samlib.core.model.entity.BaseEntity;
 import my.wf.samlib.core.dataextract.ordering.CustomerOrdering;
 import my.wf.samlib.core.storage.Storage;
+import my.wf.samlib.storage.json.exception.JsonStorageException;
 import my.wf.samlib.storage.json.filtering.MemoryDataFilter;
 import my.wf.samlib.storage.json.ordering.MemoryOrder;
 
@@ -17,7 +18,7 @@ public abstract class BaseStorageJsonImpl<T extends BaseEntity> implements Stora
     private MemoryDataFilter dataFilter;
     private MemoryOrder dataSorter;
     private EntityStorage entityStorage;
-    private Map<Long, T> cachedData = new HashMap<Long, T>();
+    private Map<Long, T> cachedData;
     private Date lastRefreshDate;
 
     protected BaseStorageJsonImpl() {
@@ -63,6 +64,9 @@ public abstract class BaseStorageJsonImpl<T extends BaseEntity> implements Stora
     }
 
     protected Map<Long, T> getCachedData() {
+        if(null ==  cachedData){
+            cachedData = new HashMap<Long, T>();
+        }
         return cachedData;
     }
 
@@ -71,17 +75,16 @@ public abstract class BaseStorageJsonImpl<T extends BaseEntity> implements Stora
     }
 
     protected void refresh(Date lastRefreshDate){
-        if(!getLastRefreshDate().before(getEntityStorage().getUpdateDate())) {
-            return;
+        if(null == getEntityStorage().getUpdateDate() || !lastRefreshDate.before(getEntityStorage().getUpdateDate())) {
+            internalRefresh(lastRefreshDate);
         }
-        internalRefresh(lastRefreshDate);
     }
 
     protected void internalRefresh(Date lastRefreshDate){
         setLastRefreshDate(lastRefreshDate);
-        cachedData.clear();
+        getCachedData().clear();
         for (T entity : getEntityCollection()) {
-            cachedData.put(entity.getId(), entity);
+            getCachedData().put(entity.getId(), entity);
         }
     }
 
@@ -95,23 +98,23 @@ public abstract class BaseStorageJsonImpl<T extends BaseEntity> implements Stora
     @Override
     public T get(Long id) {
         refresh(new Date());
-        return cachedData.get(id);
+        return getCachedData().get(id);
     }
 
     @Override
     public T save(T entity) throws StorageException {
         if(null == entity.getId()){
-            entity.setId(checkedGetEntityStorage().generateId(getStoredClass()));
+            entity.setId(checkedGetEntityStorage().generateId());
         }
         getEntityCollection().add(entity);
-        refresh(new Date());
+        getEntityStorage().saveData();
         return get(entity.getId());
     }
 
     @Override
-    public T remove(T entity) {
+    public T remove(T entity) throws StorageException {
         getEntityCollection().remove(entity);
-        refresh(new Date());
+        getEntityStorage().saveData();
         return entity;
     }
 

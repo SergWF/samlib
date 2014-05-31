@@ -25,11 +25,14 @@ public class ExtractFieldDataException extends SamlibRuntimeException {
     }
 
     public ExtractFieldDataException(String fieldName, Class entityClass) {
+        super("Wrong FieldDataExtractor for " + ((null == entityClass)?"NULL":entityClass.getName())+"."+ fieldName);
         this.fieldName = fieldName;
         this.entityClass = entityClass;
+
     }
 
     public ExtractFieldDataException(Class extractorClass, Class entityClass) {
+        super("Wrong ExtractorClass "+((null==extractorClass)?"NULL":extractorClass.getName())+" + for " + ((null == entityClass)?"NULL":entityClass.getName()));
         this.entityClass = entityClass;
         this.extractorClass = extractorClass;
     }

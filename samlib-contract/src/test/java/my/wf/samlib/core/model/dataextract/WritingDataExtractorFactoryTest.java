@@ -46,7 +46,7 @@ public class WritingDataExtractorFactoryTest {
                 , {"Read Link", "link", EntityCreator.getExpectedWritingLink(EXPECTED_ID), false}
                 , {"Read Name", "name", EntityCreator.getExpectedWritingName(EXPECTED_ID), false}
                 , {"Read Description", "description", EntityCreator.getExpectedWritingDescr(EXPECTED_ID), false}
-                , {"Read LastChangedDate", "lasChangedDate", EntityCreator.getExpectedWritingDate(EXPECTED_ID), false}
+                , {"Read LastChangedDate", "lastChangedDate", EntityCreator.getExpectedWritingDate(EXPECTED_ID), false}
                 , {"Read isUnread  true", "unread", true, true}
                 , {"Read isUnread false", "unread", false, false}
                 , {"Read size", "size", EntityCreator.getExpectedWritingSize(EXPECTED_ID), false}

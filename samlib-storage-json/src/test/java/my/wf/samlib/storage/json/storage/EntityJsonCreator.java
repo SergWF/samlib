@@ -5,6 +5,7 @@ import my.wf.samlib.core.model.entity.ComparableItem;
 import my.wf.samlib.core.model.entity.Customer;
 import my.wf.samlib.core.model.entity.Writing;
 import my.wf.samlib.storage.json.model.AuthorJson;
+import my.wf.samlib.storage.json.model.CustomerJson;
 import my.wf.samlib.storage.json.model.WritingJson;
 
 import java.util.Calendar;
@@ -21,6 +22,16 @@ public class EntityJsonCreator {
         author.setName(getExpectedAuthorName(authorId));
         author.setLink(getExpectedAuthorLink(authorId));
         for(Writing w: authorWritings){
+            author.getWritings().add(w);
+            w.setAuthor(author);
+        }
+        return author;
+    }
+
+    public static AuthorJson createAuthorWithWritings(Long authorId, int writingCount){
+        AuthorJson author = createAuthor(authorId);
+        for(int i = 1; i<= writingCount; i++){
+            Writing w = createWriting(authorId * 1000 + i);
             author.getWritings().add(w);
             w.setAuthor(author);
         }
@@ -94,8 +105,8 @@ public class EntityJsonCreator {
         };
     }
 
-    public static Customer createCustomer(Writing ... unreadWritings){
-        Customer customer = new Customer();
+    public static CustomerJson createCustomer(Writing ... unreadWritings){
+        CustomerJson customer = new CustomerJson();
         for(Writing w: unreadWritings){
             customer.getUnreadWritings().add(w);
         }

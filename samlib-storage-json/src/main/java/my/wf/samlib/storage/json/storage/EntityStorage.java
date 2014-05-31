@@ -4,10 +4,7 @@ import my.wf.samlib.core.model.entity.BaseEntity;
 import my.wf.samlib.storage.json.exception.JsonStorageException;
 import org.codehaus.jackson.map.ObjectMapper;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Reader;
-import java.io.Writer;
+import java.io.*;
 import java.util.Date;
 
 /**
@@ -52,13 +49,19 @@ public class EntityStorage {
         return data;
     }
 
-    private Reader getReader() {
-        return null;
+    protected void setData(SamlibData data){
+        this.data = data;
+    }
+
+    protected Reader getReader() throws FileNotFoundException {
+        return new FileReader(fileName);
     }
 
     protected SamlibData readData(Reader reader) throws IOException {
         data = getMapper().readValue(reader, SamlibData.class);
         updateDate = new Date();
+        reader.close();
+        data.postJsonReadProcessing();
         return data;
     }
 
@@ -76,12 +79,12 @@ public class EntityStorage {
     }
 
     protected void writeData(Writer writer) throws IOException {
-        getMapper().writeValue(writer, getData());
+        SamlibData d = getData();
+        getMapper().writeValue(writer, d);
         writer.close();
-
     }
 
-    public <T extends BaseEntity> Long generateId(Class<T> storedClass) {
-        return getData().generateNewId(storedClass);
+    public <T extends BaseEntity> Long generateId() {
+        return getData().generateNewId();
     }
 }

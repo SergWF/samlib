@@ -15,6 +15,6 @@ import java.util.List;
 public interface Storage<T extends BaseEntity> {
     T get(Long id);
     T save(T entity) throws StorageException;
-    T remove(T entity);
+    T remove(T entity) throws StorageException;
     List<T> list(CustomerFiltering<T> filter, CustomerOrdering<T> order);
 }
