@@ -20,8 +20,9 @@ public class Author extends BaseEntity implements LastChanged, HasLink, HasUnrea
     private Set<Writing> writings = new HashSet<Writing>();
     private String link;
 
+
     @Override
-    @Readable(name="link")
+    @Readable(name = "link")
     public String getLink() {
         return link;
     }
@@ -30,7 +31,7 @@ public class Author extends BaseEntity implements LastChanged, HasLink, HasUnrea
         this.link = link;
     }
 
-    public Set<Writing> getWritings(){
+    public Set<Writing> getWritings() {
         return writings;
     }
 
@@ -39,16 +40,16 @@ public class Author extends BaseEntity implements LastChanged, HasLink, HasUnrea
     }
 
     @Override
-    @Readable(name="lastChangedDate")
+    @Readable(name = "lastChangedDate")
     public Date getLastChangedDate() {
         return LastChangedDateHelper.getLastChanged(writings);
     }
 
     @Override
-    @Readable(name="unread", extractorClass = AuthorIsUnreadExtractor.class)
+    @Readable(name = "unread", extractorClass = AuthorIsUnreadExtractor.class)
     public Boolean unreadByCustomer(Customer customer) {
-        for(Writing writing: customer.getUnreadWritings()){
-            if(writing.getAuthor().equals(this)){
+        for (Writing writing : customer.getUnreadWritings()) {
+            if (writing.getAuthor().equals(this)) {
                 return true;
             }
         }
