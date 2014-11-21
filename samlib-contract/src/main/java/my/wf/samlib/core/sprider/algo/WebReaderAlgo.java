@@ -1,5 +1,6 @@
 package my.wf.samlib.core.sprider.algo;
 
+import my.wf.samlib.core.helper.SearchHelper;
 import my.wf.samlib.core.model.entity.Author;
 import my.wf.samlib.core.model.entity.Writing;
 
@@ -8,8 +9,9 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -42,25 +44,25 @@ public class WebReaderAlgo {
     }
 
     public static void refreshAuthor(Author author, Author newAuthor, Date readDate) {
-        for(Writing writinig: newAuthor.getWritings()){
-            Writing old = findByLink(writinig.getLink(), author.getWritings());
-            if(null == old || checkChanges(old, writinig)){
-                writinig.setLastChangedDate(readDate);
+        author.setName(newAuthor.getName());
+        Set<Writing> writingsForRemove = new HashSet<Writing>();
+        for (Writing writing : author.getWritings()) {
+            Writing newWriting = SearchHelper.searchByLink(writing.getLink(), newAuthor.getWritings());
+            if (null == newWriting) {
+                writingsForRemove.add(writing);
+            } else {
+                if (checkChanges(writing, newWriting)) {
+                    writing.setLastChangedDate(readDate);
+                }
+                newAuthor.getWritings().remove(newWriting);
             }
         }
+        author.getWritings().removeAll(writingsForRemove);
+        author.getWritings().addAll(newAuthor.getWritings());
     }
 
-    public static boolean checkChanges(Writing old, Writing writinig) {
-        return !old.getDescription().equals(writinig.getDescription()) ||
-                !old.getSize().equals(writinig.getSize());
-    }
-
-    public static Writing findByLink(String link, Collection<Writing> writings){
-        for(Writing writing: writings){
-            if(writing.getLink().equals(link)){
-                return writing;
-            }
-        }
-        return null;
+    public static boolean checkChanges(Writing old, Writing writing) {
+        return !old.getDescription().equals(writing.getDescription()) ||
+                !old.getSize().equals(writing.getSize());
     }
 }
