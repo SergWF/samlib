@@ -25,4 +25,17 @@ public class Customer extends BaseEntity {
         this.enabled = enabled;
     }
 
+    public boolean checkAuthorUnread(Author author){
+        for(Writing w: author.getWritings()){
+            if(getUnreadWritings().contains(w)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean checkWritingUnread(Writing writing){
+        return getUnreadWritings().contains(writing);
+    }
+
 }

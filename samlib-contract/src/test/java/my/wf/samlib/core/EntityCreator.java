@@ -1,19 +1,11 @@
 package my.wf.samlib.core;
 
-import my.wf.samlib.core.model.entity.*;
-import my.wf.samlib.core.requestprocessor.AuthorProcessor;
-import my.wf.samlib.core.requestprocessor.CustomerRequestProcessor;
-import my.wf.samlib.core.requestprocessor.MessageProcessor;
-import my.wf.samlib.core.sprider.AuthorWebReader;
-import my.wf.samlib.core.storage.AuthorStorage;
-import my.wf.samlib.core.storage.CustomerStorage;
-import org.mockito.Mockito;
+import my.wf.samlib.core.model.entity.Author;
+import my.wf.samlib.core.model.entity.ComparableItem;
+import my.wf.samlib.core.model.entity.Customer;
+import my.wf.samlib.core.model.entity.Writing;
 
-import java.awt.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 
 /**
@@ -31,6 +23,29 @@ public class EntityCreator {
             w.setAuthor(author);
         }
         return author;
+    }
+
+    public static Author copyAuthor(Author author){
+        Author copy = new Author();
+        copy.setName(author.getName());
+        copy.setLink(author.getLink());
+        for(Writing w: author.getWritings()){
+            Writing wCopy = copyWriting(w);
+            wCopy.setAuthor(copy);
+            copy.getWritings().add(wCopy);
+        }
+        return copy;
+    }
+
+    public static Writing copyWriting(Writing writing){
+        Writing copy = new Writing();
+        copy.setLink(writing.getLink());
+        copy.setDescription(writing.getDescription());
+        copy.setLastChangedDate(writing.getLastChangedDate());
+        copy.setSize(writing.getSize());
+        copy.setGroupName(writing.getGroupName());
+        copy.setName(writing.getName());
+        return copy;
     }
 
     public static String getExpectedAuthorLink(Long authorId) {
@@ -56,14 +71,21 @@ public class EntityCreator {
     public static Date getExpectedWritingDate(Long writingId) {
         Integer day = Long.valueOf(writingId).intValue();
         Calendar c = Calendar.getInstance();
-        c.setTime(new Date());
+        //c.setTime(new Date());
         c.set(Calendar.YEAR, 2014);
         c.set(Calendar.MONTH, Calendar.MARCH);
-        c.set(Calendar.DAY_OF_YEAR, day);
-        c.set(Calendar.HOUR, 10);
-        c.set(Calendar.MINUTE, 30);
-        c.set(Calendar.SECOND, 55);
+        c.set(Calendar.DAY_OF_YEAR, 14);
+        c.set(Calendar.HOUR, 14);
+        c.set(Calendar.MINUTE, 14);
+        c.set(Calendar.SECOND, 14);
         c.set(Calendar.MILLISECOND, 0);
+        return c.getTime();
+    }
+
+    public static Date changeDay(Date date, int day){
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(Calendar.DATE, day);
         return c.getTime();
     }
 

@@ -9,7 +9,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -43,7 +42,7 @@ public class WebReaderAlgo {
         return buf.toString();
     }
 
-    public static void refreshAuthor(Author author, Author newAuthor, Date readDate) {
+    public static void refreshAuthor(Author author, Author newAuthor) {
         author.setName(newAuthor.getName());
         Set<Writing> writingsForRemove = new HashSet<Writing>();
         for (Writing writing : author.getWritings()) {
@@ -52,7 +51,7 @@ public class WebReaderAlgo {
                 writingsForRemove.add(writing);
             } else {
                 if (checkChanges(writing, newWriting)) {
-                    writing.setLastChangedDate(readDate);
+                    writing.setLastChangedDate(newWriting.getLastChangedDate());
                 }
                 newAuthor.getWritings().remove(newWriting);
             }

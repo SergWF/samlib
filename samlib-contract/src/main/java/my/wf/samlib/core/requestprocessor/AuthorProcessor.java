@@ -2,12 +2,12 @@ package my.wf.samlib.core.requestprocessor;
 
 import my.wf.samlib.core.factory.AuthorFactory;
 import my.wf.samlib.core.message.exception.StorageException;
-import my.wf.samlib.core.sprider.AuthorWebReader;
-import my.wf.samlib.core.storage.AuthorStorage;
 import my.wf.samlib.core.model.entity.Author;
+import my.wf.samlib.core.sprider.AuthorWebReader;
+import my.wf.samlib.core.sprider.algo.WebReaderAlgo;
+import my.wf.samlib.core.storage.AuthorStorage;
 
 import java.io.IOException;
-import java.util.Date;
 
 /**
  * Created with IntelliJ IDEA.
@@ -57,7 +57,7 @@ public class AuthorProcessor {
     public Author addNewAuthor(String authorLink) throws IOException, StorageException {
         Author author = authorStorage.findByLink(authorLink);
         if (null == author) {
-            author = authorStorage.save(webReader.readAuthorByLink(authorFactory.newAuthor(authorLink), new Date()));
+            author = authorStorage.save(webReader.readAuthorByLink(authorLink));
         } else {
             messageProcessor.addWarnMessage(null, MSG_KEY_AUTHOR_IS_ALREADY_PRESENT, new String[]{authorLink});
         }
@@ -69,6 +69,8 @@ public class AuthorProcessor {
     }
 
     public Author updateAuthor(Author author) throws IOException, StorageException {
-        return authorStorage.save(webReader.readAuthorByLink(author, new Date()));
+        Author update = webReader.readAuthorByLink(author.getLink());
+        WebReaderAlgo.refreshAuthor(author, update);
+        return authorStorage.save(author);
     }
 }

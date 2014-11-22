@@ -1,8 +1,5 @@
 package my.wf.samlib.core.message.exception;
 
-import my.wf.samlib.core.dataextract.DataFieldExtractor;
-import my.wf.samlib.core.model.entity.BaseEntity;
-
 /**
  * Created with IntelliJ IDEA.
  * User: SBilenogov

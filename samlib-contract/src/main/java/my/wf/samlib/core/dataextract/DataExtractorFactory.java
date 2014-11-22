@@ -53,8 +53,6 @@ public class DataExtractorFactory {
                 }else{
                     dataExtractor.map.put(annotation.name(), getCustomDataFieldExtractor(extractorClass));
                 }
-
-
             }
         }
         return dataExtractor;

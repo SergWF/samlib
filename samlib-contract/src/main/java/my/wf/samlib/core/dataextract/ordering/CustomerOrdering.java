@@ -1,8 +1,10 @@
 package my.wf.samlib.core.dataextract.ordering;
 
+import my.wf.samlib.core.dataextract.DataExtractor;
 import my.wf.samlib.core.model.entity.BaseEntity;
 import my.wf.samlib.core.model.entity.Customer;
 
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,7 +12,8 @@ import java.util.List;
  * Created with IntelliJ IDEA.
  * User: SBilenogov
  */
-public class CustomerOrdering<T extends BaseEntity> {
+public class CustomerOrdering<T extends BaseEntity> implements Comparator<T> {
+    private DataExtractor<T> dataExtractor;
 
     public static enum Direction{
         ASC, DESC
@@ -20,7 +23,7 @@ public class CustomerOrdering<T extends BaseEntity> {
     private Customer customer;
 
 
-    public CustomerOrdering(Class<T> clazz, Customer customer) {
+    public CustomerOrdering(Class<T> clazz, Customer customer, DataExtractor<T> dataExtractor) {
         this.orderableClass = clazz;
         this.customer = customer;
     }
@@ -45,4 +48,24 @@ public class CustomerOrdering<T extends BaseEntity> {
     public Class<T> getOrderableClass() {
         return orderableClass;
     }
+
+    @Override
+    public int compare(T o1, T o2) {
+        if(null == o1){
+            return -1;
+        }
+        if(null == o2){
+            return 1;
+        }
+        for(OrderItem item: getOrderItems()){
+            Comparable v1 = (Comparable) dataExtractor.getValue(o1, item);
+            Comparable v2 = (Comparable) dataExtractor.getValue(o2, item);
+            int res = (Direction.ASC == item.getDirection())?v1.compareTo(v2):v2.compareTo(v1);
+            if(0 != res){
+                return res;
+            }
+        }
+        return 0;
+    }
+
 }

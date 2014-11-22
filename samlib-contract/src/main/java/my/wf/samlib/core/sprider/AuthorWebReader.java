@@ -1,24 +1,18 @@
 package my.wf.samlib.core.sprider;
 
 import my.wf.samlib.core.model.entity.Author;
-import my.wf.samlib.core.model.entity.Writing;
 import my.wf.samlib.core.sprider.algo.WebReaderAlgo;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.Collection;
-import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.logging.Logger;
 
 /**
  * Created with IntelliJ IDEA.
  * User: SBilenogov
  */
 public class AuthorWebReader {
+    private static final Logger logger = Logger.getLogger(AuthorWebReader.class.getName());
+
     public static final String DEFAULT_ENCODING = "windows-1251";
     AuthorWebParser parser;
 
@@ -31,10 +25,12 @@ public class AuthorWebReader {
         this.parser = parser;
     }
 
-    public Author readAuthorByLink(Author author,  Date readDate) throws IOException {
-        String htmlData = WebReaderAlgo.readAuthorPage(author.getLink(), DEFAULT_ENCODING);
+    public Author readAuthorByLink(String link) throws IOException {
+        logger.info("Read author by link " + link);
+        String htmlData = WebReaderAlgo.readAuthorPage(link, DEFAULT_ENCODING);
+        logger.fine("Read OK. size:" + htmlData.length());
         Author newAuthor = parser.parseAuthor(htmlData);
-        WebReaderAlgo.refreshAuthor(author, newAuthor, readDate);
+        logger.fine("Author read OK. name= "+newAuthor.getName()+", Writings: " + newAuthor.getWritings().size());
         return newAuthor;
     }
 }
