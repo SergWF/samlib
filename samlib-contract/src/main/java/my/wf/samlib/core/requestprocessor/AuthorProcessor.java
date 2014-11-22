@@ -22,32 +22,16 @@ public class AuthorProcessor {
     AuthorFactory authorFactory;
 
 
-    public AuthorStorage getAuthorStorage() {
-        return authorStorage;
-    }
-
     public void setAuthorStorage(AuthorStorage authorStorage) {
         this.authorStorage = authorStorage;
-    }
-
-    public AuthorWebReader getWebReader() {
-        return webReader;
     }
 
     public void setWebReader(AuthorWebReader webReader) {
         this.webReader = webReader;
     }
 
-    public MessageProcessor getMessageProcessor() {
-        return messageProcessor;
-    }
-
     public void setMessageProcessor(MessageProcessor messageProcessor) {
         this.messageProcessor = messageProcessor;
-    }
-
-    public AuthorFactory getAuthorFactory() {
-        return authorFactory;
     }
 
     public void setAuthorFactory(AuthorFactory authorFactory) {

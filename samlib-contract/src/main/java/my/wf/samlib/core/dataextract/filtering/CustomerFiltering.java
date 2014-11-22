@@ -22,7 +22,7 @@ public class CustomerFiltering<T extends BaseEntity> {
     private Customer customer;
     private DataExtractor<T> dataExtractor;
 
-    private static final Map<Class, Matcher> matcherMap = new HashMap<>();
+    private static final Map<Class, Matcher> matcherMap = new HashMap<Class, Matcher>();
     static{
         matcherMap.put(String.class, new StringMatcherImpl());
     }

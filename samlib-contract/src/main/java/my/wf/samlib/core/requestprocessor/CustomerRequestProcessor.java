@@ -38,64 +38,32 @@ public class CustomerRequestProcessor {
     CustomerFactory customerFactory;
     //private CustomerOrdering<Author> defaultOrder = CustomerOrdering.create(Author.class).add("", CustomerOrdering.Direction.DESC);
 
-    public AuthorProcessor getAuthorProcessor() {
-        return authorProcessor;
-    }
-
     public void setAuthorProcessor(AuthorProcessor authorProcessor) {
         this.authorProcessor = authorProcessor;
-    }
-
-    public CustomerStorage getCustomerStorage() {
-        return customerStorage;
     }
 
     public void setCustomerStorage(CustomerStorage customerStorage) {
         this.customerStorage = customerStorage;
     }
 
-    public AuthorWebReader getWebReader() {
-        return webReader;
-    }
-
     public void setWebReader(AuthorWebReader webReader) {
         this.webReader = webReader;
-    }
-
-    public MessageProcessor getMessageProcessor() {
-        return messageProcessor;
     }
 
     public void setMessageProcessor(MessageProcessor messageProcessor) {
         this.messageProcessor = messageProcessor;
     }
 
-    public AuthorStorage getAuthorStorage() {
-        return authorStorage;
-    }
-
     public void setAuthorStorage(AuthorStorage authorStorage) {
         this.authorStorage = authorStorage;
-    }
-
-    public CustomerFactory getCustomerFactory() {
-        return customerFactory;
     }
 
     public void setCustomerFactory(CustomerFactory customerFactory) {
         this.customerFactory = customerFactory;
     }
 
-    public FilterFactory getFilterFactory() {
-        return filterFactory;
-    }
-
     public void setFilterFactory(FilterFactory filterFactory) {
         this.filterFactory = filterFactory;
-    }
-
-    public OrderFactory getOrderFactory() {
-        return orderFactory;
     }
 
     public void setOrderFactory(OrderFactory orderFactory) {
@@ -137,12 +105,13 @@ public class CustomerRequestProcessor {
 
     public Author removeAuthor(Customer customer, Author author) throws StorageException {
         customer.getAuthors().remove(author);
+        customer.getUnreadWritings().removeAll(author.getWritings());
         customerStorage.save(customer);
         messageProcessor.addInfoMessage(customer, AUTHOR_WAS_REMOVED, new String[]{author.getName()});
         return author;
     }
 
-    public Author markAuthorAsRead(Customer customer, Author author) {
+    public Author markAuthorAsRead(Customer customer, Author author) throws StorageException {
         Set<Writing> forDelete = new HashSet<Writing>();
         for (Writing writing : customer.getUnreadWritings()) {
             if (writing.getAuthor().equals(author)) {
@@ -152,6 +121,7 @@ public class CustomerRequestProcessor {
         if (!forDelete.isEmpty()) {
             customer.getUnreadWritings().removeAll(forDelete);
         }
+        customerStorage.save(customer);
         return author;
     }
 

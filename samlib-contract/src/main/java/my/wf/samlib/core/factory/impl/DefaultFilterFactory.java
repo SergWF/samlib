@@ -16,7 +16,7 @@ public class DefaultFilterFactory implements FilterFactory {
 
     @Override
     public <T extends BaseEntity> CustomerFiltering<T> createFilter(Class<T> clazz, Customer customer) {
-        return new CustomerFiltering<>(clazz, customer, dataExtractorFactory.getDataExtractor(clazz));
+        return new CustomerFiltering<T>(clazz, customer, dataExtractorFactory.getDataExtractor(clazz));
     }
 
     @Override

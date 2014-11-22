@@ -15,24 +15,12 @@ public class SecurityRequestProcessor {
     CustomerFactory customerFactory;
     CredentialsChecker credentialsChecker;
 
-    public CustomerStorage getCustomerStorage() {
-        return customerStorage;
-    }
-
     public void setCustomerStorage(CustomerStorage customerStorage) {
         this.customerStorage = customerStorage;
     }
 
-    public CustomerFactory getCustomerFactory() {
-        return customerFactory;
-    }
-
     public void setCustomerFactory(CustomerFactory customerFactory) {
         this.customerFactory = customerFactory;
-    }
-
-    public CredentialsChecker getCredentialsChecker() {
-        return credentialsChecker;
     }
 
     public void setCredentialsChecker(CredentialsChecker credentialsChecker) {

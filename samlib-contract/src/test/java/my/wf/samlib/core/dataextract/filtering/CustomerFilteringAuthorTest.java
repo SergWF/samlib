@@ -73,7 +73,7 @@ public class CustomerFilteringAuthorTest {
 
     @Test
     public void doTest(){
-        CustomerFiltering<Author>  customerFiltering = new CustomerFiltering<>(Author.class, customer,  new DataExtractorFactory().getDataExtractor(Author.class));
+        CustomerFiltering<Author>  customerFiltering = new CustomerFiltering<Author>(Author.class, customer,  new DataExtractorFactory().getDataExtractor(Author.class));
         for(int i = 0; i< fieldNames.length; i++){
             customerFiltering.add(fieldNames[i], fieldValues[i]);
         }
