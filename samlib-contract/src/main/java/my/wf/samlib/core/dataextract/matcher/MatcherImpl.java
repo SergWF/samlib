@@ -1,10 +1,12 @@
 package my.wf.samlib.core.dataextract.matcher;
 
-import java.util.Date;
+/**
+ * Created by Serg on 22.11.2014.
+ */
+public class MatcherImpl<T> implements Matcher<T> {
 
-public class DateMatcher implements Matcher<Date> {
     @Override
-    public boolean match(Date value, Date pattern) {
+    public boolean match(T value, T pattern) {
         if(null == pattern){
             return true;
         }
