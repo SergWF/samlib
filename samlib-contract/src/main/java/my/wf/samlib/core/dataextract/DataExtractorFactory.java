@@ -71,7 +71,7 @@ public class DataExtractorFactory {
         };
     }
 
-    private <T extends BaseEntity, K> DataFieldExtractor<T, K> getCustomDataFieldExtractor(final Class<CustomDataFieldExtractor<T, K>> extractorClass) {
+    private <T extends BaseEntity, K> DataFieldExtractor<T, K> getCustomDataFieldExtractor(final Class<DataFieldExtractor<T, K>> extractorClass) {
         return new DataFieldExtractor<T, K>() {
             @Override
             public K extractData(T entity, ComparableItem<K> item) throws ExtractFieldDataException {
