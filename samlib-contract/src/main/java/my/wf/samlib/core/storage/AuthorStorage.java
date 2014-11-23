@@ -13,8 +13,8 @@ import java.util.List;
  * Created with IntelliJ IDEA.
  * User: SBilenogov
  */
-public interface AuthorStorage extends Storage<Author> {
-    Author findByLink(String authorLink) throws StorageException;
+public interface AuthorStorage<T  extends Author> extends Storage<T> {
+    T findByLink(String authorLink) throws StorageException;
     List<Writing> getAuthorsWritings(Author author, CustomerFiltering<Writing> filter, CustomerOrdering<Writing> order);
-    List<Author> getCustomerList(Customer customer);
+    List<T> getCustomerList(Customer customer);
 }
