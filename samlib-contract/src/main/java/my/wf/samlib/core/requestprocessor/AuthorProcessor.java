@@ -13,13 +13,13 @@ import java.io.IOException;
  * Created with IntelliJ IDEA.
  * User: SBilenogov
  */
-public class AuthorProcessor<T extends Author> {
+public class AuthorProcessor {
     public static final String MSG_KEY_AUTHOR_IS_ALREADY_PRESENT = "author.is.already.present";
 
-    AuthorStorage<T> authorStorage;
-    AuthorWebReader<T> webReader;
+    AuthorStorage authorStorage;
+    AuthorWebReader webReader;
     MessageProcessor messageProcessor;
-    AuthorFactory<T> authorFactory;
+    AuthorFactory authorFactory;
 
 
     public void setAuthorStorage(AuthorStorage authorStorage) {
@@ -38,8 +38,8 @@ public class AuthorProcessor<T extends Author> {
         this.authorFactory = authorFactory;
     }
 
-    public T addNewAuthor(String authorLink) throws IOException, StorageException {
-        T author = authorStorage.findByLink(authorLink);
+    public Author addNewAuthor(String authorLink) throws IOException, StorageException {
+        Author author = authorStorage.findByLink(authorLink);
         if (null == author) {
             author = authorStorage.save(webReader.readAuthorByLink(authorLink));
         } else {
@@ -48,12 +48,12 @@ public class AuthorProcessor<T extends Author> {
         return author;
     }
 
-    public T removeAuthor(T author) throws StorageException {
+    public Author removeAuthor(Author author) throws StorageException {
         return authorStorage.remove(author);
     }
 
-    public T updateAuthor(T author) throws IOException, StorageException {
-        T update = webReader.readAuthorByLink(author.getLink());
+    public Author updateAuthor(Author author) throws IOException, StorageException {
+        Author update = webReader.readAuthorByLink(author.getLink());
         WebReaderAlgo.refreshAuthor(author, update);
         return authorStorage.save(author);
     }

@@ -10,11 +10,11 @@ import java.util.logging.Logger;
  * Created with IntelliJ IDEA.
  * User: SBilenogov
  */
-public class AuthorWebReader<T extends Author> {
+public class AuthorWebReader {
     private static final Logger logger = Logger.getLogger(AuthorWebReader.class.getName());
 
     public static final String DEFAULT_ENCODING = "windows-1251";
-    AuthorWebParser<T> parser;
+    AuthorWebParser parser;
 
 
     public AuthorWebParser getParser() {
@@ -25,11 +25,11 @@ public class AuthorWebReader<T extends Author> {
         this.parser = parser;
     }
 
-    public T readAuthorByLink(String link) throws IOException {
+    public Author readAuthorByLink(String link) throws IOException {
         logger.info("Read author by link " + link);
         String htmlData = WebReaderAlgo.readAuthorPage(link, DEFAULT_ENCODING);
         logger.fine("Read OK. size:" + htmlData.length());
-        T newAuthor = parser.parseAuthor(htmlData);
+        Author newAuthor = parser.parseAuthor(htmlData);
         logger.fine("Author read OK. name= "+newAuthor.getName()+", Writings: " + newAuthor.getWritings().size());
         return newAuthor;
     }
