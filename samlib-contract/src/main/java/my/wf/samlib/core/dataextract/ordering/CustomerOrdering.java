@@ -26,6 +26,7 @@ public class CustomerOrdering<T extends BaseEntity> implements Comparator<T> {
     public CustomerOrdering(Class<T> clazz, Customer customer, DataExtractor<T> dataExtractor) {
         this.orderableClass = clazz;
         this.customer = customer;
+        this.dataExtractor = dataExtractor;
     }
 
     public CustomerOrdering<T> add(String fieldName, Direction direction) {

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="my.wf.samlib.core.model.entity.Author" table="Author">
+        <meta attribute="class-description">Author Deatils</meta>
+        <id name="id" type="java.lang.Long" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="name" column="name" type="string"/>
+        <property name="link" column="link" type="string" unique="true" unique-key="uk_author_link"/>
+        <set name="writings" cascade="all-delete-orphan">
+            <key><column name="authorId" not-null="true" /></key>
+            <one-to-many class="my.wf.samlib.core.model.entity.Writing" />
+        </set>
+    </class>
+    <class name="my.wf.samlib.core.model.entity.Writing" table="Writing">
+        <meta attribute="class-description">Writing Deatils</meta>
+        <id name="id" type="java.lang.Long" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="name" column="name" type="string"/>
+        <property name="link" column="link" type="string" unique="true" unique-key="uk_writing_link"/>
+        <property name="description" column="description" type="string"/>
+        <property name="groupName" column="groupName" type="string"/>
+        <property name="size" column="size" type="string"/>
+        <property name="lastChangedDate" column="lastChangedDate" type="java.util.Date"/>
+        <many-to-one name="author" class="my.wf.samlib.core.model.entity.Author" foreign-key="fk_writing_author">
+            <column name="authorId" />
+        </many-to-one>
+    </class>
+    <class name="my.wf.samlib.core.model.entity.Customer" table="Customer">
+        <meta attribute="class-description">Customer Deatils</meta>
+        <id name="id" type="java.lang.Long" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="name" column="name" type="string"/>
+        <set name="unreadWritings" table="UnreadWritings" inverse="false" fetch="select" cascade="all">
+            <key><column name="customerId"/></key>
+            <many-to-many column="writingId" class="my.wf.samlib.core.model.entity.Writing" foreign-key="fk_unreadWritings"/>
+        </set>
+        <set name="authors" table="CustomerAuthors" inverse="false" fetch="select" cascade="all">
+            <key><column name="customerId"/></key>
+            <many-to-many column="authorId" class="my.wf.samlib.core.model.entity.Author" foreign-key="fk_customer_author"/>
+        </set>
+    </class>
+</hibernate-mapping>

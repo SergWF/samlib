@@ -55,4 +55,13 @@ public class Author extends BaseEntity implements LastChanged, HasLink, HasUnrea
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "Author{" +
+                "id='" + getId() + '\'' +
+                ", name='" + getName() + '\'' +
+                ", link='" + link + '\'' +
+                '}';
+    }
 }

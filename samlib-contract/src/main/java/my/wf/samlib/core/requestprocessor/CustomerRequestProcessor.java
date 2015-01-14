@@ -20,10 +20,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Created with IntelliJ IDEA.
- * User: SBilenogov
- */
+
 public class CustomerRequestProcessor {
 
     public static final String AUTHOR_WAS_ADDED = "author.was.added";

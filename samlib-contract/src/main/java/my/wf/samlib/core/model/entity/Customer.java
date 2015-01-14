@@ -15,9 +15,19 @@ public class Customer extends BaseEntity {
     public Set<Author> getAuthors(){
         return authors;
     }
+
+    public void setAuthors(Set<Author> authors) {
+        this.authors = authors;
+    }
+
     public Set<Writing> getUnreadWritings(){
         return unreadWritings;
     }
+
+    public void setUnreadWritings(Set<Writing> unreadWritings) {
+        this.unreadWritings = unreadWritings;
+    }
+
     public boolean isEnabled(){
         return enabled;
     }

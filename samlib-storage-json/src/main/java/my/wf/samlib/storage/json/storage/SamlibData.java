@@ -7,7 +7,11 @@ import my.wf.samlib.core.model.entity.Writing;
 import my.wf.samlib.storage.json.model.AuthorJson;
 import my.wf.samlib.storage.json.model.CustomerJson;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,13 +20,13 @@ import java.util.*;
 public class SamlibData {
     protected Set<CustomerJson> customers;
     protected Set<AuthorJson> authors;
-    private Map<Class<? extends BaseEntity>, Set<? extends BaseEntity>> map = new HashMap<Class<? extends BaseEntity>, Set<? extends BaseEntity>>();
+    private ConcurrentMap<Class<? extends BaseEntity>, Set<? extends BaseEntity>> map = new ConcurrentHashMap<Class<? extends BaseEntity>, Set<? extends BaseEntity>>();
     protected Long sequence;
 
 
     public SamlibData() {
-        customers = new HashSet<CustomerJson>();
-        authors = new HashSet<AuthorJson>();
+        customers = new CopyOnWriteArraySet<CustomerJson>();
+        authors = new CopyOnWriteArraySet<AuthorJson>();
         map.put(Customer.class, customers);
         map.put(Author.class, authors);
     }
@@ -71,9 +75,11 @@ public class SamlibData {
     }
 
     protected void postJsonReadAuthor(AuthorJson author) {
+        /*
         for (Long id : author.getAuthorIds()) {
             customer.getAuthors().add(findInCollection(id, authors));
         }
+        */
     }
 
     protected <T extends BaseEntity> T findInCollection(Long id, Collection<T> collection){
@@ -86,6 +92,6 @@ public class SamlibData {
     }
 
     protected Writing findWriting(Long writingId, Collection<Author> authors){
-
+    return null;
     }
 }

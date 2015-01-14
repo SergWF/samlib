@@ -11,10 +11,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: SBilenogov
- */
+
 public class MessageProcessor {
     private List<SamlibMessage> messages = new LinkedList<SamlibMessage>();
 

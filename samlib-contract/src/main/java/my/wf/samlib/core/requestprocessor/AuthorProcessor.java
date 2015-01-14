@@ -9,10 +9,6 @@ import my.wf.samlib.core.storage.AuthorStorage;
 
 import java.io.IOException;
 
-/**
- * Created with IntelliJ IDEA.
- * User: SBilenogov
- */
 public class AuthorProcessor {
     public static final String MSG_KEY_AUTHOR_IS_ALREADY_PRESENT = "author.is.already.present";
 

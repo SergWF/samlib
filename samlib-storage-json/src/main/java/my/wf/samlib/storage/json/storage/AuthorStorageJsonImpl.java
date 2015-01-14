@@ -1,10 +1,11 @@
 package my.wf.samlib.storage.json.storage;
 
 import my.wf.samlib.core.dataextract.filtering.CustomerFiltering;
+import my.wf.samlib.core.dataextract.ordering.CustomerOrdering;
 import my.wf.samlib.core.message.exception.StorageException;
 import my.wf.samlib.core.model.entity.Author;
+import my.wf.samlib.core.model.entity.Customer;
 import my.wf.samlib.core.model.entity.Writing;
-import my.wf.samlib.core.dataextract.ordering.CustomerOrdering;
 import my.wf.samlib.core.storage.AuthorStorage;
 import my.wf.samlib.storage.json.model.AuthorJson;
 
@@ -40,6 +41,11 @@ public class AuthorStorageJsonImpl extends BaseStorageJsonImpl<Author> implement
     @Override
     public List<Writing> getAuthorsWritings(Author author, CustomerFiltering<Writing> filter, CustomerOrdering<Writing> order)  {
             return getDataSorter().sort(getDataFilter().doFilter(get(author.getId()).getWritings(), filter), order);
+    }
+
+    @Override
+    public List<Author> getCustomerList(Customer customer) {
+        return null;
     }
 
 }

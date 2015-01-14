@@ -24,9 +24,9 @@ public class CustomerRequestProcessorTest {
         Writing w4 = EntityCreator.createWriting(40L);
         Writing w5 = EntityCreator.createWriting(50L);
         Writing w6 = EntityCreator.createWriting(60L);
-        Customer customer = EntityCreator.createCustomer(w1,w2,w3,w4,w5);
-        Author author1 = EntityCreator.createAuthor(1L, w1,w2,w3);
-        Author author2 = EntityCreator.createAuthor(2L, w4,w5,w6);
+        Customer customer = EntityCreator.createCustomer(w1, w2, w3, w4, w5);
+        Author author1 = EntityCreator.createAuthor(1L, w1, w2, w3);
+        Author author2 = EntityCreator.createAuthor(2L, w4, w5, w6);
         customer.getAuthors().add(author1);
         customer.getAuthors().add(author2);
         customerRequestProcessor.markAuthorAsRead(customer, author1);

@@ -34,7 +34,7 @@ public class SecurityRequestProcessor {
 
     public Customer getCustomerByCredentials(String customerName, String password){
         Customer customer = customerStorage.getByName(customerName);
-        return credentialsChecker.checkPassword(customer, password)?customer:null;
+        return credentialsChecker.check(customer, password)?customer:null;
     }
 
     public Customer removeCustomer(Admin admin, Customer customer) throws StorageException {

@@ -36,14 +36,23 @@ public abstract class BaseEntity{
         if (!(o instanceof BaseEntity)) return false;
 
         BaseEntity that = (BaseEntity) o;
-
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-
-        return super.equals(o);
+        if(id != null){
+            return id.equals(that.id);
+        }else{
+            return super.equals(o);
+        }
     }
 
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : super.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName()+"{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

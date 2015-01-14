@@ -6,7 +6,6 @@ import my.wf.samlib.core.model.entity.Writing;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -14,37 +13,12 @@ import java.util.Set;
  * User: SBilenogov
  */
 public class AuthorJson extends Author {
-    private Set<Long> writingIds;
-
-    @Override
-    public Long getId() {
-        return super.getId();
-    }
-
-    @Override
-    public void setId(Long id) {
-        super.setId(id);
-    }
-
-    @Override
-    public String getName() {
-        return super.getName();
-    }
-
-    @Override
-    public void setName(String name) {
-        super.setName(name);
-    }
+    //private Set<Long> writingIds;
 
     @Override
     @JsonIgnore
     public Set<Writing> getWritings() {
         return super.getWritings();
-    }
-
-    @Override
-    public void setWritings(Set<Writing> writings) {
-        super.setWritings(writings);
     }
 
     @Override
@@ -59,6 +33,7 @@ public class AuthorJson extends Author {
         return super.unreadByCustomer(customer);
     }
 
+/*
     public Set<Long> getWritingIds() {
         Set<Long> ids = new HashSet<Long>();
         for (Writing writing : getWritings()) {
@@ -70,4 +45,5 @@ public class AuthorJson extends Author {
     public void setWritingIds(Set<Long> writingIds) {
         this.writingIds = writingIds;
     }
+    */
 }
