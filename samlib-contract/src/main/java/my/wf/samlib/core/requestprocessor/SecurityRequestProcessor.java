@@ -6,10 +6,6 @@ import my.wf.samlib.core.model.entity.Admin;
 import my.wf.samlib.core.model.entity.Customer;
 import my.wf.samlib.core.storage.CustomerStorage;
 
-/**
- * Created with IntelliJ IDEA.
- * User: SBilenogov
- */
 public class SecurityRequestProcessor {
     CustomerStorage customerStorage;
     CustomerFactory customerFactory;
