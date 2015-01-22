@@ -13,8 +13,6 @@
     <modules>
         <module>samlib-contract</module>
         <module>samlib-storage-json</module>
-        <module>samlib-storage-hibernate</module>
-        <module>samlib-service</module>
         <module>samlib-storage-jpa</module>
     </modules>
     <properties>
