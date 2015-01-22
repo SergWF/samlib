@@ -1,12 +1,13 @@
 package my.wf.samlib.core.requestprocessor;
 
 import my.wf.samlib.core.dataextract.filtering.CustomerFiltering;
+import my.wf.samlib.core.dataextract.helper.AuthorPropertyHelper;
 import my.wf.samlib.core.dataextract.ordering.CustomerOrdering;
-import my.wf.samlib.core.factory.CustomerFactory;
-import my.wf.samlib.core.factory.FilterFactory;
-import my.wf.samlib.core.factory.OrderFactory;
+import my.wf.samlib.core.factory.EntityFactory;
 import my.wf.samlib.core.message.exception.ExtractFieldDataException;
 import my.wf.samlib.core.message.exception.StorageException;
+import my.wf.samlib.core.model.comparator.AuthorComparator;
+import my.wf.samlib.core.model.comparator.WritingComparator;
 import my.wf.samlib.core.model.entity.Author;
 import my.wf.samlib.core.model.entity.BaseEntity;
 import my.wf.samlib.core.model.entity.Customer;
@@ -16,9 +17,10 @@ import my.wf.samlib.core.storage.AuthorStorage;
 import my.wf.samlib.core.storage.CustomerStorage;
 
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 
 public class CustomerRequestProcessor {
@@ -30,10 +32,7 @@ public class CustomerRequestProcessor {
     AuthorStorage authorStorage;
     AuthorWebReader webReader;
     MessageProcessor messageProcessor;
-    FilterFactory filterFactory;
-    OrderFactory orderFactory;
-    CustomerFactory customerFactory;
-    //private CustomerOrdering<Author> defaultOrder = CustomerOrdering.create(Author.class).add("", CustomerOrdering.Direction.DESC);
+    EntityFactory entityFactory;
 
     public void setAuthorProcessor(AuthorProcessor authorProcessor) {
         this.authorProcessor = authorProcessor;
@@ -55,38 +54,33 @@ public class CustomerRequestProcessor {
         this.authorStorage = authorStorage;
     }
 
-    public void setCustomerFactory(CustomerFactory customerFactory) {
-        this.customerFactory = customerFactory;
-    }
-
-    public void setFilterFactory(FilterFactory filterFactory) {
-        this.filterFactory = filterFactory;
-    }
-
-    public void setOrderFactory(OrderFactory orderFactory) {
-        this.orderFactory = orderFactory;
+    public void setCustomerFactory(EntityFactory entityFactory) {
+        this.entityFactory = entityFactory;
     }
 
     private <T extends BaseEntity> Boolean isNameMatched(T entity, String namePattern) {
         return null == namePattern || 0 == namePattern.trim().length() || entity.getName().trim().replaceAll("\\s+", " ").toUpperCase().contains(namePattern.toUpperCase());
     }
 
-    private Set<Author> getUnreadAuthors(Customer customer) {
-        Set<Author> authors = new HashSet<Author>();
-        for (Writing w : customer.getUnreadWritings()) {
-            authors.add(w.getAuthor());
+    public Set<Author> getAuthors(Customer customer, String namePattern, boolean unreadOnly, CustomerOrdering customerOrdering) throws StorageException, ExtractFieldDataException {
+        CustomerFiltering customerFiltering = new CustomerFiltering().add("name", namePattern).add("unread",  Boolean.toString(unreadOnly));
+        Set<Author> authors = new TreeSet<>(new AuthorComparator(customerOrdering));
+        for(Author author: customer.getAuthors()){
+            if(isNameMatched(author, namePattern) && (!unreadOnly || author.getUneadWritngsCount(customer) > 0)){
+                authors.add(author);
+            }
         }
         return authors;
     }
 
-    public List<Author> getAuthors(Customer customer, String namePattern, boolean unreadOnly, CustomerOrdering<Author> customerOrdering) throws StorageException, ExtractFieldDataException {
-        CustomerFiltering<Author> filter = filterFactory.createFilter(Author.class, customer).add("name", namePattern).add("unread", unreadOnly);
-        return authorStorage.list(filter, customerOrdering);
-    }
-
-    public List<Writing> getWritings(Customer customer, Author author, String namePattern, boolean unreadOnly, CustomerOrdering<Writing> customerOrdering) throws ExtractFieldDataException {
-        CustomerFiltering<Writing> filter = filterFactory.createFilter(Writing.class, customer).add("name", namePattern).add("unread", unreadOnly);
-        return authorStorage.getAuthorsWritings(author, filter, customerOrdering);
+    public Set<Writing> getWritings(Customer customer, Author author, String namePattern, boolean unreadOnly, CustomerOrdering customerOrdering) throws ExtractFieldDataException {
+        Set<Writing> writings = new TreeSet<>(new WritingComparator(customerOrdering));
+        for(Writing writing: writings){
+            if(isNameMatched(author, namePattern) && (!unreadOnly || author.getUneadWritngsCount(customer) > 0)){
+                writings.add(writing);
+            }
+        }
+        return writings;
     }
 
     public Author addAuthor(Customer customer, String authorLink) throws IOException, StorageException {
@@ -130,4 +124,5 @@ public class CustomerRequestProcessor {
         }
         return writing;
     }
+
 }

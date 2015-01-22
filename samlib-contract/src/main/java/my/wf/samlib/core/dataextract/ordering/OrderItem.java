@@ -1,34 +1,23 @@
 package my.wf.samlib.core.dataextract.ordering;
 
-import my.wf.samlib.core.model.entity.ComparableItem;
-import my.wf.samlib.core.model.entity.Customer;
-
 /**
  * Created with IntelliJ IDEA.
  * User: SBilenogov
  */
-public class OrderItem<K> implements ComparableItem<K> {
+public class OrderItem {
     private String fieldName;
     private CustomerOrdering.Direction direction;
-    private Customer customer;
 
-    public OrderItem(String fieldName, CustomerOrdering.Direction direction, Customer customer) {
+    public OrderItem(String fieldName, CustomerOrdering.Direction direction) {
         this.fieldName = fieldName;
         this.direction = direction;
-        this.customer = customer;
     }
  
-    @Override
     public String getFieldName() {
         return fieldName;
     }
 
     public CustomerOrdering.Direction getDirection() {
         return direction;
-    }
-
-    @Override
-    public Customer getCustomer() {
-        return customer;
     }
 }

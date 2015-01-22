@@ -1,18 +1,11 @@
 package my.wf.samlib.core;
 
-import my.wf.samlib.core.model.entity.Author;
-import my.wf.samlib.core.model.entity.ComparableItem;
-import my.wf.samlib.core.model.entity.Customer;
-import my.wf.samlib.core.model.entity.Writing;
-
-import java.util.Calendar;
-import java.util.Date;
-
 /**
  * Created with IntelliJ IDEA.
  * User: SBilenogov
  */
 public class EntityCreator {
+/*
     public static Author createAuthor(Long authorId, Writing... authorWritings){
         Author author = new Author();
         author.setId(authorId);
@@ -129,4 +122,5 @@ public class EntityCreator {
         }
         return customer;
     }
+    */
 }

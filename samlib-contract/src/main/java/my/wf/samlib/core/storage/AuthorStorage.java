@@ -15,6 +15,4 @@ import java.util.List;
  */
 public interface AuthorStorage extends Storage<Author> {
     Author findByLink(String authorLink) throws StorageException;
-    List<Writing> getAuthorsWritings(Author author, CustomerFiltering<Writing> filter, CustomerOrdering<Writing> order);
-    List<Author> getCustomerList(Customer customer);
 }

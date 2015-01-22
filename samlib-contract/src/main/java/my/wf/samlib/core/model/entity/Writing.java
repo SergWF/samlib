@@ -1,85 +1,30 @@
 package my.wf.samlib.core.model.entity;
 
-import my.wf.samlib.core.dataextract.impl.WritingIsUnreadExtractor;
-import my.wf.samlib.core.model.extender.HasLink;
-import my.wf.samlib.core.model.extender.HasUnreadState;
-import my.wf.samlib.core.model.extender.LastChanged;
-import my.wf.samlib.core.model.extender.Readable;
-
 import java.util.Date;
 
 /**
  * Created with IntelliJ IDEA.
  * User: SBilenogov
  */
-public class Writing extends BaseEntity implements LastChanged, HasLink, HasUnreadState {
-    private String link;
-    private Author author;
-    private String description;
-    private String groupName;
-    private String size;
-    private Date lastChangedDate;
+public interface Writing extends BaseEntity {
+    String getLink();
+    void setLink(String link);
 
-    @Override
-    @Readable(name = "link")
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
-    }
-
-    public Author getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(Author author) {
-        this.author = author;
-    }
+    public Author getAuthor();
+    void setAuthor(Author author);
 
 
-    @Readable(name="description")
-    public String getDescription() {
-        return description;
-    }
+    String getDescription();
+    void setDescription(String description);
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    String getSize();
+    void setSize(String size);
 
-    @Readable(name="size")
-    public String getSize() {
-        return size;
-    }
+    Date getLastChangedDate();
+    void setLastChangedDate(Date lastChangedDate);
 
-    public void setSize(String size) {
-        this.size = size;
-    }
+    String getGroupName();
+    void setGroupName(String groupName);
 
-    @Override
-    @Readable(name="lastChangedDate")
-    public Date getLastChangedDate() {
-        return lastChangedDate;
-    }
-
-    public void setLastChangedDate(Date lastChangedDate) {
-        this.lastChangedDate = lastChangedDate;
-    }
-
-    @Readable(name="groupName")
-    public String getGroupName() {
-        return groupName;
-    }
-
-    public void setGroupName(String groupName) {
-        this.groupName = groupName;
-    }
-
-
-    @Override
-    @Readable(name="unread", extractorClass = WritingIsUnreadExtractor.class)
-    public Boolean unreadByCustomer(Customer customer) {
-        return customer.getUnreadWritings().contains(this);
-    }
+    Boolean unreadByCustomer(Customer customer);
 }

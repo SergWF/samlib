@@ -15,6 +15,7 @@
         <module>samlib-storage-json</module>
         <module>samlib-storage-hibernate</module>
         <module>samlib-service</module>
+        <module>samlib-storage-jpa</module>
     </modules>
     <properties>
         <java.version>1.7</java.version>

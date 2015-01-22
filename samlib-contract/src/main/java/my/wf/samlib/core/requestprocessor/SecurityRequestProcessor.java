@@ -1,6 +1,6 @@
 package my.wf.samlib.core.requestprocessor;
 
-import my.wf.samlib.core.factory.CustomerFactory;
+import my.wf.samlib.core.factory.EntityFactory;
 import my.wf.samlib.core.message.exception.StorageException;
 import my.wf.samlib.core.model.entity.Admin;
 import my.wf.samlib.core.model.entity.Customer;
@@ -8,15 +8,15 @@ import my.wf.samlib.core.storage.CustomerStorage;
 
 public class SecurityRequestProcessor {
     CustomerStorage customerStorage;
-    CustomerFactory customerFactory;
+    EntityFactory entityFactory;
     CredentialsChecker credentialsChecker;
 
     public void setCustomerStorage(CustomerStorage customerStorage) {
         this.customerStorage = customerStorage;
     }
 
-    public void setCustomerFactory(CustomerFactory customerFactory) {
-        this.customerFactory = customerFactory;
+    public void setCustomerFactory(EntityFactory entityFactory) {
+        this.entityFactory = entityFactory;
     }
 
     public void setCredentialsChecker(CredentialsChecker credentialsChecker) {
@@ -24,7 +24,8 @@ public class SecurityRequestProcessor {
     }
 
     public Customer addNewCustomer(String name, String password, Admin admin) {
-        Customer customer = customerFactory.newCustomer(name);
+        Customer customer = entityFactory.createInstance(Customer.class);
+        customer.setName(name);
         return customerStorage.createNewCustomerRecord(customer, password);
     }
 

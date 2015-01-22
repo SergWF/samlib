@@ -1,6 +1,5 @@
 package my.wf.samlib.core.sprider.algo;
 
-import my.wf.samlib.core.helper.SearchHelper;
 import my.wf.samlib.core.model.entity.Author;
 import my.wf.samlib.core.model.entity.Writing;
 
@@ -43,6 +42,7 @@ public class WebReaderAlgo {
     }
 
     public static void refreshAuthor(Author author, Author newAuthor) {
+        /*
         author.setName(newAuthor.getName());
         Set<Writing> writingsForRemove = new HashSet<Writing>();
         for (Writing writing : author.getWritings()) {
@@ -58,6 +58,7 @@ public class WebReaderAlgo {
         }
         author.getWritings().removeAll(writingsForRemove);
         author.getWritings().addAll(newAuthor.getWritings());
+        */
     }
 
     public static boolean checkChanges(Writing old, Writing writing) {
