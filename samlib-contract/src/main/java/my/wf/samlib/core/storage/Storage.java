@@ -1,7 +1,5 @@
 package my.wf.samlib.core.storage;
 
-import my.wf.samlib.core.dataextract.filtering.CustomerFiltering;
-import my.wf.samlib.core.dataextract.ordering.CustomerOrdering;
 import my.wf.samlib.core.message.exception.StorageException;
 import my.wf.samlib.core.model.entity.BaseEntity;
 

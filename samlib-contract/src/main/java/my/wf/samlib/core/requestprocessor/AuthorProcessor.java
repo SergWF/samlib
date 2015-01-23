@@ -1,6 +1,5 @@
 package my.wf.samlib.core.requestprocessor;
 
-import my.wf.samlib.core.factory.EntityFactory;
 import my.wf.samlib.core.message.exception.StorageException;
 import my.wf.samlib.core.model.entity.Author;
 import my.wf.samlib.core.sprider.AuthorWebReader;

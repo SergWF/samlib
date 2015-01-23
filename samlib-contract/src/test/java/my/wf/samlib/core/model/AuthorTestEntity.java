@@ -1,30 +1,23 @@
-package my.wf.samlib.storage.jpa.model;
+package my.wf.samlib.core.model;
 
 import my.wf.samlib.core.dataextract.helper.AuthorPropertyHelper;
+import my.wf.samlib.core.dataextract.helper.BaseEntityHelper;
 import my.wf.samlib.core.model.entity.Author;
 import my.wf.samlib.core.model.entity.Customer;
 import my.wf.samlib.core.model.entity.Writing;
 
-import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Table(name="author")
-public class AuthorJpa implements Author {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+/**
+ * Created by Serg on 22.01.2015.
+ */
+public class AuthorTestEntity implements Author {
     private Long id;
-    @Column(name = "name")
     private String name;
-    @Column(name = "link")
     private String link;
-    @OneToMany(mappedBy = "author", orphanRemoval = true, cascade = CascadeType.ALL)
-    private Set<WritingJpa> writings = new HashSet<>();
-    @ManyToMany(mappedBy = "authors")
-    private Set<CustomerJpa> customers = new HashSet<>();
+    private Set<WritingTestEntity> writings = new HashSet<>();
 
     @Override
     public String getLink() {
@@ -33,7 +26,7 @@ public class AuthorJpa implements Author {
 
     @Override
     public void setLink(String link) {
-this.link = link;
+        this.link = link;
     }
 
     @Override
@@ -74,5 +67,15 @@ this.link = link;
     @Override
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return BaseEntityHelper.getEntityEquals(this, o);
+    }
+
+    @Override
+    public int hashCode() {
+        return BaseEntityHelper.getEntityHash(this);
     }
 }

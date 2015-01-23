@@ -1,13 +1,9 @@
 package my.wf.samlib.core.requestprocessor;
 
-import my.wf.samlib.core.dataextract.filtering.CustomerFiltering;
-import my.wf.samlib.core.dataextract.helper.AuthorPropertyHelper;
 import my.wf.samlib.core.dataextract.ordering.CustomerOrdering;
 import my.wf.samlib.core.factory.EntityFactory;
 import my.wf.samlib.core.message.exception.ExtractFieldDataException;
 import my.wf.samlib.core.message.exception.StorageException;
-import my.wf.samlib.core.model.comparator.AuthorComparator;
-import my.wf.samlib.core.model.comparator.WritingComparator;
 import my.wf.samlib.core.model.entity.Author;
 import my.wf.samlib.core.model.entity.BaseEntity;
 import my.wf.samlib.core.model.entity.Customer;
@@ -26,6 +22,7 @@ import java.util.TreeSet;
 public class CustomerRequestProcessor {
 
     public static final String AUTHOR_WAS_ADDED = "author.was.added";
+    public static final String AUTHOR_ALREADY_IN_LIST = "author.already.in.list";
     public static final String AUTHOR_WAS_REMOVED = "author.was.removed";
     AuthorProcessor authorProcessor;
     CustomerStorage customerStorage;
@@ -63,18 +60,31 @@ public class CustomerRequestProcessor {
     }
 
     public Set<Author> getAuthors(Customer customer, String namePattern, boolean unreadOnly, CustomerOrdering customerOrdering) throws StorageException, ExtractFieldDataException {
-        CustomerFiltering customerFiltering = new CustomerFiltering().add("name", namePattern).add("unread",  Boolean.toString(unreadOnly));
-        Set<Author> authors = new TreeSet<>(new AuthorComparator(customerOrdering));
+        Comparator<Author> comparator = new Comparator<Author>() {
+            @Override
+            public int compare(Author o1, Author o2) {
+                int res = o1.getLastChangedDate().compareTo(o2.getLastChangedDate());
+                return 0 != res?res:o1.getName().compareTo(o2.getName());
+            }
+        };
+        Set<Author> result = new TreeSet<>(comparator);
         for(Author author: customer.getAuthors()){
             if(isNameMatched(author, namePattern) && (!unreadOnly || author.getUneadWritngsCount(customer) > 0)){
-                authors.add(author);
+                result.add(author);
             }
         }
-        return authors;
+        return result;
     }
 
     public Set<Writing> getWritings(Customer customer, Author author, String namePattern, boolean unreadOnly, CustomerOrdering customerOrdering) throws ExtractFieldDataException {
-        Set<Writing> writings = new TreeSet<>(new WritingComparator(customerOrdering));
+        Comparator<Writing> comparator = new Comparator<Writing>() {
+            @Override
+            public int compare(Writing o1, Writing o2) {
+                int res = o1.getLastChangedDate().compareTo(o2.getLastChangedDate());
+                return 0 != res?res:o1.getName().compareTo(o2.getName());
+            }
+        };
+        Set<Writing> writings = new TreeSet<>(comparator);
         for(Writing writing: writings){
             if(isNameMatched(author, namePattern) && (!unreadOnly || author.getUneadWritngsCount(customer) > 0)){
                 writings.add(writing);
@@ -87,7 +97,15 @@ public class CustomerRequestProcessor {
         return addAuthor(customer, authorProcessor.addNewAuthor(authorLink));
     }
 
+    protected boolean isAuthorInCustomerList(Customer customer, Author author){
+        return customer.getAuthors().contains(author);
+    }
+
     public Author addAuthor(Customer customer, Author author) throws StorageException {
+        if(isAuthorInCustomerList(customer, author)){
+            messageProcessor.addWarnMessage(customer, AUTHOR_ALREADY_IN_LIST, new String[]{author.getName()});
+            return author;
+        }
         customer.getAuthors().add(author);
         customerStorage.save(customer);
         messageProcessor.addInfoMessage(customer, AUTHOR_WAS_ADDED, new String[]{author.getName()});

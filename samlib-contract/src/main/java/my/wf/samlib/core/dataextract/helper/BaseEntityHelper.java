@@ -1,6 +1,5 @@
 package my.wf.samlib.core.dataextract.helper;
 
-import my.wf.samlib.core.model.entity.Author;
 import my.wf.samlib.core.model.entity.BaseEntity;
 
 /**

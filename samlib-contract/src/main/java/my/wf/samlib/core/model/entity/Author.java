@@ -14,9 +14,9 @@ public interface Author extends BaseEntity {
     void setLink(String link);
     Set<Writing> getWritings();
 
-    Set<Customer> getCustomers();
     Date getLastChangedDate();
 
+    @Transient
     Boolean unreadByCustomer(Customer customer);
 
     @Transient

@@ -1,10 +1,81 @@
 package my.wf.samlib.core;
 
+import my.wf.samlib.core.model.AuthorTestEntity;
+import my.wf.samlib.core.model.CustomerTestEntity;
+import my.wf.samlib.core.model.WritingTestEntity;
+import my.wf.samlib.core.model.entity.Author;
+import my.wf.samlib.core.model.entity.Customer;
+import my.wf.samlib.core.model.entity.Writing;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created with IntelliJ IDEA.
  * User: SBilenogov
  */
 public class EntityCreator {
+    public static Date BASE_DATE;
+
+    static{
+        try {
+            BASE_DATE = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss").parse("2014.11.21 13:30:50");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static String getExpectedAuthorLink(int authorIndex) {
+        return "http://author_link" + authorIndex;
+    }
+
+    public static String getExpectedAuthorName(int authorIndex) {
+        return "Author name" + authorIndex;
+    }
+
+    public static String getExpectedCustomerName(int customerIndex) {
+        return "Customer name" + customerIndex;
+    }
+
+    public static String getExpectedWritingLink(Author author, int writingIndex) {
+        return author.getLink() + "/writing" + writingIndex;
+    }
+
+    public static String getExpectedWritingName(Author author, int writingIndex) {
+        return author.getName() + " writing " + writingIndex;
+     }
+
+
+    public static Author createAuthor(int authorIndex, int writingCount){
+        Author author = new AuthorTestEntity();
+        author.setId(Long.valueOf(authorIndex));
+        author.setLink(getExpectedAuthorLink(authorIndex));
+        author.setName(getExpectedAuthorName(authorIndex));
+        for(int i = 0; i< writingCount; i++){
+            author.getWritings().add(createWriting(author, i));
+        }
+        return author;
+    }
+
+    public static Writing createWriting(Author author, int writingIndex){
+        Writing writing = new WritingTestEntity();
+        writing.setAuthor(author);
+        writing.setId(author.getId()*1000 + writingIndex);
+        writing.setLink(getExpectedWritingLink(author, writingIndex));
+        writing.setName(getExpectedWritingName(author, writingIndex));
+        writing.setLastChangedDate(BASE_DATE);
+        return writing;
+    }
+
+    public static Customer createCustomer(int customerIndex){
+        Customer customer = new CustomerTestEntity();
+        customer.setId(Long.valueOf(customerIndex));
+        customer.setName(getExpectedCustomerName(customerIndex));
+        customer.setEnabled(true);
+        return customer;
+    }
+
 /*
     public static Author createAuthor(Long authorId, Writing... authorWritings){
         Author author = new Author();
@@ -41,13 +112,6 @@ public class EntityCreator {
         return copy;
     }
 
-    public static String getExpectedAuthorLink(Long authorId) {
-        return "http://author_link" + authorId;
-    }
-
-    public static String getExpectedAuthorName(Long authorId) {
-        return "Author name" + authorId;
-    }
 
     public static Writing createWriting(Long writingId){
         Writing writing = new Writing();
