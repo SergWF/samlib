@@ -20,6 +20,10 @@
             <groupId>my.wf.samlib</groupId>
             <artifactId>samlib-contract</artifactId>
         </dependency>
+        <dependency>
+            <groupId>my.wf.samlib</groupId>
+            <artifactId>samlib-storage-jpa</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>javax.el</groupId>

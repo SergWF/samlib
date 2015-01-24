@@ -11,6 +11,8 @@ import my.wf.samlib.core.model.entity.Writing;
 import my.wf.samlib.core.sprider.AuthorWebReader;
 import my.wf.samlib.core.storage.AuthorStorage;
 import my.wf.samlib.core.storage.CustomerStorage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Comparator;
@@ -20,6 +22,8 @@ import java.util.TreeSet;
 
 
 public class CustomerRequestProcessor {
+
+    private static final Logger logger = LoggerFactory.getLogger(AuthorProcessor.class);
 
     public static final String AUTHOR_WAS_ADDED = "author.was.added";
     public static final String AUTHOR_ALREADY_IN_LIST = "author.already.in.list";
@@ -60,6 +64,7 @@ public class CustomerRequestProcessor {
     }
 
     public Set<Author> getAuthors(Customer customer, String namePattern, boolean unreadOnly, CustomerOrdering customerOrdering) throws StorageException, ExtractFieldDataException {
+        logger.debug("read customer's["+customer.getName()+"] authorList");
         Comparator<Author> comparator = new Comparator<Author>() {
             @Override
             public int compare(Author o1, Author o2) {
@@ -77,6 +82,7 @@ public class CustomerRequestProcessor {
     }
 
     public Set<Writing> getWritings(Customer customer, Author author, String namePattern, boolean unreadOnly, CustomerOrdering customerOrdering) throws ExtractFieldDataException {
+        logger.debug("read customer's["+customer.getName()+"] writings of  author " + author.getName());
         Comparator<Writing> comparator = new Comparator<Writing>() {
             @Override
             public int compare(Writing o1, Writing o2) {
@@ -94,6 +100,7 @@ public class CustomerRequestProcessor {
     }
 
     public Author addAuthor(Customer customer, String authorLink) throws IOException, StorageException {
+        logger.info("Add author by link ["+authorLink+"] for customer ["+customer.getName()+"]");
         return addAuthor(customer, authorProcessor.addNewAuthor(authorLink));
     }
 
@@ -102,7 +109,9 @@ public class CustomerRequestProcessor {
     }
 
     public Author addAuthor(Customer customer, Author author) throws StorageException {
+        logger.info("Add author ["+author.getName() +"] for customer ["+customer.getName()+"]");
         if(isAuthorInCustomerList(customer, author)){
+            logger.warn("Author ["+author.getName()+"] is already in the customer's ["+customer.getName()+"] list");
             messageProcessor.addWarnMessage(customer, AUTHOR_ALREADY_IN_LIST, new String[]{author.getName()});
             return author;
         }
@@ -113,14 +122,17 @@ public class CustomerRequestProcessor {
     }
 
     public Author removeAuthor(Customer customer, Author author) throws StorageException {
+        logger.debug("Remove author [" + author.getName() + "] from customer's [" + customer.getName() + "] list");
         customer.getAuthors().remove(author);
         customer.getUnreadWritings().removeAll(author.getWritings());
         customerStorage.save(customer);
+        logger.debug("author [" + author.getName() + "] was removed from customer's [" + customer.getName() + "] list");
         messageProcessor.addInfoMessage(customer, AUTHOR_WAS_REMOVED, new String[]{author.getName()});
         return author;
     }
 
     public Author markAuthorAsRead(Customer customer, Author author) throws StorageException {
+        logger.debug("Author [" + author.getName() + "] was marked as already read by customer [" + customer.getName() + "]");
         Set<Writing> forDelete = new HashSet<Writing>();
         for (Writing writing : customer.getUnreadWritings()) {
             if (writing.getAuthor().equals(author)) {
@@ -136,9 +148,11 @@ public class CustomerRequestProcessor {
 
     public Writing changeReadFlag(Customer customer, Writing writing, boolean isRead) {
         if(isRead) {
-            customer.getUnreadWritings().add(writing);
-        }else{
+            logger.debug("writing [" + writing.getLink() + "] was removed from customer's [" + customer.getName() + "] unread list");
             customer.getUnreadWritings().remove(writing);
+        } else {
+            logger.debug("writing [" + writing.getLink() + "] was added to customer's ["+customer.getName()+"] unread list");
+            customer.getUnreadWritings().add(writing);
         }
         return writing;
     }

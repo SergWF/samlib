@@ -39,13 +39,17 @@ public class AuthorStorageJsonImpl extends BaseStorageJsonImpl<Author> implement
     }
 
     @Override
-    public List<Writing> getAuthorsWritings(Author author, CustomerFiltering<Writing> filter, CustomerOrdering<Writing> order)  {
-            return getDataSorter().sort(getDataFilter().doFilter(get(author.getId()).getWritings(), filter), order);
-    }
-
-    @Override
-    public List<Author> getCustomerList(Customer customer) {
+    public Writing getWriting(Long writingId) {
         return null;
     }
 
+//    @Override
+//    public List<Writing> getAuthorsWritings(Author author, CustomerFiltering<Writing> filter, CustomerOrdering<Writing> order)  {
+//            return getDataSorter().sort(getDataFilter().doFilter(get(author.getId()).getWritings(), filter), order);
+//    }
+
+    @Override
+    public List<Author> list() {
+        return null;
+    }
 }
