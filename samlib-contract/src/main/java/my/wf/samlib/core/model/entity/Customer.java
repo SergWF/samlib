@@ -7,6 +7,7 @@ import java.util.Set;
  * User: SBilenogov
  */
 public interface Customer extends BaseEntity {
+    String getUserName();
     Set<Author> getAuthors();
     Set<Writing> getUnreadWritings();
     boolean isEnabled();

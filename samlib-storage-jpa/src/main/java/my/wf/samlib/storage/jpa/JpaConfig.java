@@ -10,6 +10,5 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @Configuration
 @EnableJpaRepositories
 @ComponentScan
-
 public class JpaConfig {
 }

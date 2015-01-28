@@ -1,12 +1,15 @@
 package my.wf.samlib.core.model.entity;
 
+import my.wf.samlib.core.model.ext.HasDate;
+import my.wf.samlib.core.model.ext.ReadMark;
+
 import java.util.Date;
 
 /**
  * Created with IntelliJ IDEA.
  * User: SBilenogov
  */
-public interface Writing extends BaseEntity {
+public interface Writing extends BaseEntity, ReadMark, HasDate {
     String getLink();
     void setLink(String link);
 
@@ -26,5 +29,6 @@ public interface Writing extends BaseEntity {
     String getGroupName();
     void setGroupName(String groupName);
 
+    @Override
     Boolean unreadByCustomer(Customer customer);
 }

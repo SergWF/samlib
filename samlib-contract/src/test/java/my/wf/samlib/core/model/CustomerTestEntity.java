@@ -19,6 +19,11 @@ public class CustomerTestEntity implements Customer {
 
 
     @Override
+    public String getUserName() {
+        return name;
+    }
+
+    @Override
     public Set<Author> getAuthors() {
         return (Set<Author>)(Set<?>)authors;
     }

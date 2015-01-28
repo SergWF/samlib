@@ -10,7 +10,17 @@ import java.util.List;
 public class CustomerOrdering {
 
     public static enum Direction{
-        ASC, DESC
+        ASC(1), DESC(-1);
+        private final int value;
+
+        public int getValue() {
+            return value;
+        }
+
+        Direction(int value) {
+            this.value = value;
+        }
+
     }
     private List<OrderItem> orderItems = new ArrayList<>();
 

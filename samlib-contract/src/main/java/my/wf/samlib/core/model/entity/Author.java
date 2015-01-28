@@ -1,5 +1,8 @@
 package my.wf.samlib.core.model.entity;
 
+import my.wf.samlib.core.model.ext.HasDate;
+import my.wf.samlib.core.model.ext.ReadMark;
+
 import java.beans.Transient;
 import java.util.Date;
 import java.util.Set;
@@ -8,7 +11,7 @@ import java.util.Set;
  * Created with IntelliJ IDEA.
  * User: SBilenogov
  */
-public interface Author extends BaseEntity {
+public interface Author extends BaseEntity, HasDate, ReadMark {
 
     String getLink();
     void setLink(String link);
@@ -17,6 +20,7 @@ public interface Author extends BaseEntity {
     Date getLastChangedDate();
 
     @Transient
+    @Override
     Boolean unreadByCustomer(Customer customer);
 
     @Transient

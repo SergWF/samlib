@@ -22,6 +22,8 @@ public class CustomerJpa implements Customer {
     private String name;
     @Column(name = "enabled")
     private boolean enabled;
+    @Column(name = "user_name")
+    private String userName;
     @ManyToMany
     @JoinTable(name = "customer_author",
             foreignKey = @ForeignKey(name="fk_customer_author"),
@@ -37,6 +39,15 @@ public class CustomerJpa implements Customer {
     )
     private Set<WritingJpa> unreadWritings = new HashSet<>();
 
+
+    @Override
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     @Override
     public Set<Author> getAuthors() {

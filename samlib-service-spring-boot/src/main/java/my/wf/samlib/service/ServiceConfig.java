@@ -27,17 +27,6 @@ public class ServiceConfig {
     AuthorStorage authorStorage;
 
     @Bean
-    public CustomerRequestProcessor customerRequestProcessor(){
-        CustomerRequestProcessor bean = new CustomerRequestProcessor();
-        bean.setAuthorProcessor(authorProcessor());
-        bean.setAuthorStorage(authorStorage);
-        bean.setCustomerFactory(entityFactory);
-        bean.setCustomerStorage(customerStorage);
-        bean.setMessageProcessor(messageProcessor());
-        return bean;
-    }
-
-    @Bean
     public MessageProcessor messageProcessor() {
         MessageProcessor bean = new MessageProcessor();
         return bean;
